@@ -1,2 +1,2 @@
-# Set up the app:
+# Set up the app
 To run this project after cloning, write: $ npm install
