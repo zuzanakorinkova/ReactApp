@@ -3,12 +3,14 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Router from './navigation/Router';
 import UserReducer from './store/reducers/UserReducers';
+import ChatReducer from './store/reducers/ChatReducers';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
   user: UserReducer,
+  chat: ChatReducer,
 });
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
 

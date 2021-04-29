@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import Input from '../components/common/Input';
 import { useNavigation } from '@react-navigation/native';
 import { signin } from '../store/actions/UserActions';
+import { ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 
 const SignInScreen = props => {
     const navigation = useNavigation();
@@ -16,7 +17,7 @@ const SignInScreen = props => {
 
     const handleSignIn = () => {
         //console.log('signing in')
-        dispatch(signin(email, password))
+            dispatch(signin(email, password))
     }
 
     return (
@@ -31,9 +32,7 @@ const SignInScreen = props => {
                         error="Please fill out your email" placeholder="Write your email" />
                     <Input label="Password" text={password} setContent={content => setPassword(content)} textValid={passwordValid} onValid={valid => setPasswordValid(valid)}
                         error="Please fill out your password" placeholder="Write your password" secureTextEntry={true} />
-
-                    {/* <Input label="Confirm password" newName={newName} nameValid={nameValid} handleNewInput={handleNewInput}
-                    error="Passwords dont match" placeholder="Confirm your password" secureTextEntry={true} /> */}
+                  
                 </View>
                 <Button title="Login" onPress={handleSignIn}></Button>
                 <TouchableOpacity onPress={() => navigation.navigate('Signup')}><Text>Create new account? Signup</Text></TouchableOpacity>
@@ -63,6 +62,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: 10,
     },
+    displayNone: {
+        display: "none",
+    },
+    displayError: {
+        color: "red",
+    }
 });
 
 export default SignInScreen; 

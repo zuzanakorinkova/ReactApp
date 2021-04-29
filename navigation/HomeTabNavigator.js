@@ -3,6 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, Button, StyleSheet, } from 'react-native';
 import ChatScreen from '../screens/ChatScreen';
+import ChatMessagesScreen from '../screens/ChatMessageScreen';
+import NewChatRoom from '../screens/NewChatRoom';
 import ProfileScreen from '../screens/ProfileScreen';
 import HomeScreen from '../screens/HomeScreen';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -10,24 +12,38 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+
+const options = {
+    headerStyle: {
+        backgroundColor: '#fff',
+    },
+    headerTintColor: '#4f52a0',
+    headerTitleStyle: {
+        textTransform: 'uppercase',
+    },
+    cardStyle: { backgroundColor: '#FFFFFF' },
+};
+
 function ChatStackNavigator() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Chat" component={ChatScreen} />
+            <Stack.Screen name="Chat" component={ChatScreen}  options={options} />
+            <Stack.Screen name="ChatMessages" component={ChatMessagesScreen} options={options} />
+            <Stack.Screen name="New ChatRoom" component={NewChatRoom} options={options} />
         </Stack.Navigator>
     )
 }
 function ProfileStackNavigator() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Profile" component={ProfileScreen} />
+            <Stack.Screen name="Profile" component={ProfileScreen}  options={options} />
         </Stack.Navigator>
     )
 }
 function HomeStackNavigator() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Home" component={HomeScreen}  options={options} />
         </Stack.Navigator>
     )
 }

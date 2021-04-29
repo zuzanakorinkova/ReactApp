@@ -29,6 +29,7 @@ const Router = props => {
         headerTitleStyle: {
             textTransform: 'uppercase',
         },
+        cardStyle: { backgroundColor: '#FFFFFF' },
     };
     const idToken = useSelector(state => state.user.idToken)
     return (

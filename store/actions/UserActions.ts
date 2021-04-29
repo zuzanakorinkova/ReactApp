@@ -1,8 +1,16 @@
+import {fetchChatrooms} from "./ChatActions";
+
+
 export const SIGNUP = 'SIGNUP';
 export const SIGNIN = 'SIGNIN';
+export const SAVE_USER = 'SAVE_USER';
 
-export const signup = (email, password) => {
-    return async dispatch => {
+export const saveUser = (user: any) => {
+    return {type: SAVE_USER, payload:user};
+}
+
+export const signup = (email: any, password: any) => {
+    return async (dispatch: any) => {
         const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCRRKVYBM8k8vyxWfoKlzutNKcFbic0V3g', {
             method: 'POST',
             headers: {
@@ -17,16 +25,17 @@ export const signup = (email, password) => {
         const data = await response.json();
         console.log(data)
         if (!response.ok) {
-            console.log('there was a problem')
+            console.log(data.error.message)
         } else {
             dispatch({ type: SIGNUP, payload: data });
+            dispatch(fetchChatrooms());
             console.log(email);
         }
     }
 }
 
-export const signin = (email, password) => {
-    return async dispatch => {
+export const signin = (email: any, password: any) => {
+    return async (dispatch: any) => {
         const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCRRKVYBM8k8vyxWfoKlzutNKcFbic0V3g', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -39,9 +48,10 @@ export const signin = (email, password) => {
         const data = await response.json();
         console.log(data)
         if (!response.ok) {
-            console.log('there was a problem')
+            console.log(data.error.message)
         } else {
             dispatch({ type: SIGNUP, payload: data });
+            dispatch(fetchChatrooms());
             console.log(email);
         }
     }
