@@ -14,7 +14,7 @@ const ChatMessagesScreen = props => {
 
     const [value, onInputText] = useState('WriteMessage');
 
-    const chatMessages = useSelector(state => state.chat.chatMessages)
+    const chatMessages = useSelector(state => state.chat.chatrooms).find(room => room.id === id).chatMessages
 
     const handleSend = () => {
         console.log("value " + value);
@@ -30,7 +30,7 @@ const ChatMessagesScreen = props => {
             </View>
             <View>
                 <TextInput
-                    onChangeText={text => onChangeText(text)}
+                    onChangeText={text => onInputText(text)}
                     value={value}
                 />
                 <Button title="Send" onPress={handleSend}></Button>

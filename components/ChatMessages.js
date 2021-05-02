@@ -7,12 +7,13 @@ import Input from '../components/common/Input';
 
 const ChatMessages = props => {
 
-    const hardcodedUserId = 'HvkYPWaNeSU7tUk4jEEeeJlGyX72';
+    const userId = getState().user.idToken;
+   // const hardcodedUserId = 'HvkYPWaNeSU7tUk4jEEeeJlGyX72';
     const hours = props.chatmessage.created.getHours();
     const minutes = props.chatmessage.created.getMinutes();
 
     const userIdOfMessage = props.chatmessage.user.id;
-    const isMe = hardcodedUserId === userIdOfMessage;
+    const isMe = userId === userIdOfMessage; // const isMe = hardcodedUserId === userIdOfMessage
 
     let name;
     if (!isMe) {

@@ -71,15 +71,15 @@ export const createChatroom = (chatroomName: any) => {
     }
 };
 
-export const createChatMessage = (message: any) => {
+export const createChatMessage = (message: any, chatroomId: any) => {
     return async (dispatch: any, getState: any) => {
         const token = getState().user.idToken
         let chatMessages = new ChatMessages('', message, new Date(), token);
         console.log(token);
-        let chatroomId = '-MZUL2WfOppbkq_kNkh6';
+        let chatroom = chatroomId; // '-MZUL2WfOppbkq_kNkh6'
 
         const response = await fetch(
-            'https://cbsstudents-9a50e-default-rtdb.firebaseio.com/chatrooms/' + chatroomId + '/chatMessages.json?auth=' + token, {
+            'https://cbsstudents-9a50e-default-rtdb.firebaseio.com/chatrooms/' + chatroom + '/chatMessages.json?auth=' + token, {
 
             method: 'POST',
             headers: {
@@ -98,7 +98,7 @@ export const createChatMessage = (message: any) => {
             console.log('There was a problem')
         } else {
             chatMessages.id = data.name;
-            dispatch({ type: NEW_CHATMESSAGE, payload: chatMessages })
+            dispatch({ type: NEW_CHATMESSAGE, payload: {chatMessages, chatroom}}) // chatMessages
         }
     }
 };
