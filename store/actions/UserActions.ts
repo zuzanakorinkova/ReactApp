@@ -28,8 +28,8 @@ export const signup = (email: any, password: any) => {
             console.log(data.error.message)
         } else {
             dispatch({ type: SIGNUP, payload: data });
+            //console.log(email);
             dispatch(fetchChatrooms());
-            console.log(email);
         }
     }
 }
@@ -52,7 +52,7 @@ export const signin = (email: any, password: any) => {
         } else {
             dispatch({ type: SIGNUP, payload: data });
             dispatch(fetchChatrooms());
-            console.log(email);
+            //console.log(email);
         }
     }
 }

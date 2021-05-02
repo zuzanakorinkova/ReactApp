@@ -66,6 +66,7 @@ export const createChatroom = (chatroomName: any) => {
         } else {
             chatroom.id = data.name;
             dispatch({ type: NEW_CHATROOM, payload: chatroom })
+            dispatch(fetchChatrooms());
         }
 
     }
