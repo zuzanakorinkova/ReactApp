@@ -21,7 +21,7 @@ export const fetchChatrooms = () => {
         });
 
         const data = await response.json();
-        console.log(data);
+       // console.log(data);
 
         if (!response.ok) {
             //There was a problem..
@@ -29,10 +29,16 @@ export const fetchChatrooms = () => {
             let chatrooms: ChatRoom[] = [];
             for (const key in data) {
                 chatrooms.push(new ChatRoom(key, data[key].name, new Date(data[key].created), []))
+                // chatrooms.forEach(chatroom => console.log(chatroom.id))
             }
-            console.log(chatrooms)
-
+           // let chatroom = ''
+            // for(let i = 0; i < chatrooms.length; i++) {
+            //     chatroom.push(chatrooms[i].id)
+            // }
+           // console.log(chatroom)
+            
             dispatch({ type: FETCHED_CHATROOMS, payload: chatrooms });
+            dispatch(fetchChatMessage());
         }
     };
 };
@@ -41,7 +47,6 @@ export const createChatroom = (chatroomName: any) => {
     return async (dispatch: any, getState: any) => {
         let chatroom = new ChatRoom('', chatroomName, new Date() , [])
         const token = getState().user.idToken;
-        console.log(token);
 
         const response = await fetch(
             // to save a chat message in a chat room:
@@ -59,7 +64,7 @@ export const createChatroom = (chatroomName: any) => {
         });
 
         const data = await response.json();
-        console.log(data);
+        //console.log(data);
 
         if (!response.ok) {
 
@@ -75,9 +80,11 @@ export const createChatroom = (chatroomName: any) => {
 export const createChatMessage = (message: any, chatroomId: any) => {
     return async (dispatch: any, getState: any) => {
         const token = getState().user.idToken
-        let chatMessages = new ChatMessages('', message, new Date(), token);
-        console.log(token);
-        let chatroom = chatroomId; // '-MZUL2WfOppbkq_kNkh6'
+        const user = getState().user
+        // console.log(user)
+
+        let chatMessages = new ChatMessages('', message, new Date(), user);
+        let chatroom = chatroomId;
 
         const response = await fetch(
             'https://cbsstudents-9a50e-default-rtdb.firebaseio.com/chatrooms/' + chatroom + '/chatMessages.json?auth=' + token, {
@@ -94,12 +101,13 @@ export const createChatMessage = (message: any, chatroomId: any) => {
 
         });
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         if (!response.ok) {
             console.log('There was a problem')
         } else {
             chatMessages.id = data.name;
             dispatch({ type: NEW_CHATMESSAGE, payload: {chatMessages, chatroom}}) // chatMessages
+            dispatch(fetchChatMessage());
         }
     }
 };
@@ -109,10 +117,11 @@ export const createChatMessage = (message: any, chatroomId: any) => {
 export const fetchChatMessage = () => {
     return async (dispatch: any, getState: any) => {
         const token = getState().user.idToken;
-        const chatroomId = '-MZI7c95qGX2cmWAxBlk';
-
+        let chatroom =  '-MZigApreoa1w1o6djGA'  //chatroomId (chatroomId:any)
+        //console.log('==')
+        //console.log(chatroomId)
         const response = await fetch(
-            'https://cbsstudents-9a50e-default-rtdb.firebaseio.com/chatrooms/' +  chatroomId + '/chatMessages.json?auth=' + token, {
+            'https://cbsstudents-9a50e-default-rtdb.firebaseio.com/chatrooms/' +  chatroom + '/chatMessages.json?auth=' + token, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -120,7 +129,7 @@ export const fetchChatMessage = () => {
         });
 
         const data = await response.json();
-        console.log(data);
+         console.log(data);
 
         if (!response.ok) {
             console.log(data.error)
@@ -130,9 +139,9 @@ export const fetchChatMessage = () => {
             for (const key in data) {
                 chatMessages.push(new ChatMessages(key, data[key].message, new Date(data[key].created), data[key].user))
             }
-            console.log(chatMessages)
+            //console.log(chatMessages)
 
-            dispatch({ type: FETCHED_CHATMESSAGES, payload: chatMessages });
+            dispatch({ type: FETCHED_CHATMESSAGES, payload: chatMessages}); //{chatMessages, chatroom}
         }
     };
 };

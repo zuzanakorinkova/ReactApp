@@ -14,7 +14,10 @@ const ChatMessagesScreen = props => {
 
     const [value, onInputText] = useState('WriteMessage');
 
-    const chatMessages = useSelector(state => state.chat.chatrooms).find(room => room.id === id).chatMessages
+    const chatMessages = useSelector(state => state.chat.chatMessages)
+    console.log('--')
+    console.log(chatMessages)
+    
 
     const handleSend = () => {
         console.log("value " + value);
@@ -25,7 +28,7 @@ const ChatMessagesScreen = props => {
         <View>
             <View>
                 <FlatList data={chatMessages} renderItem={itemData => (
-                    <ChatMessage chatmessage={itemData.item}></ChatMessage>
+                    <ChatMessages chatmessage={itemData.item}></ChatMessages>
                 )} />
             </View>
             <View>

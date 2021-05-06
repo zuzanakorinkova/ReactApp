@@ -1,4 +1,4 @@
-import { NEW_CHATMESSAGE, FETCHED_CHATROOMS } from '../actions/ChatActions';
+import { NEW_CHATMESSAGE, FETCHED_CHATROOMS, FETCHED_CHATMESSAGES } from '../actions/ChatActions';
 import ChatRoom from '../../models/ChatRoom';
 import ChatMessages from '../../models/ChatMessages';
 import {Action} from '../reducers/UserReducers';
@@ -29,8 +29,10 @@ const ChatReducer = (state = initialState, action: Action) => {
 
             const index: number = state.chatrooms.findIndex(room => room.id === action.payload.chatroom)
             const chatroomArray: ChatRoom[] = [...state.chatrooms];
-
             return tassign(state, {chatrooms: chatroomArray})
+        
+        case FETCHED_CHATMESSAGES:
+            return tassign(state, {chatMessages: action.payload});
             
         default:
             return state
