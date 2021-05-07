@@ -9,6 +9,10 @@ import { signup } from '../store/actions/UserActions';
 const SignUpScreen = props => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const [title, setTitle] = useState('');
+    const [titleValid, setTitleValid] = useState('');
+    const [name, setName] = useState('');
+    const [nameValid, setNameValid] = useState('');
     const [email, setEmail] = useState('');
     const [emailValid, setEmailValid] = useState(false);
     const [password, setPassword] = useState('');
@@ -16,7 +20,7 @@ const SignUpScreen = props => {
 
     const handleSignUp = () => {
         //console.log('signing up')
-        dispatch(signup(email, password))
+        dispatch(signup(email, password, name, title))
     }
 
     return (

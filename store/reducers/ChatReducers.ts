@@ -32,6 +32,9 @@ const ChatReducer = (state = initialState, action: Action) => {
             return tassign(state, {chatrooms: chatroomArray})
         
         case FETCHED_CHATMESSAGES:
+           // console.log('===')
+           // console.log(state.chatrooms)
+           // console.log(action.payload.chatroom)
             return tassign(state, {chatMessages: action.payload});
             
         default:

@@ -1,5 +1,12 @@
 class User {
-    constructor(id, name, email, image, title, chatNotification) {
+    id: string;
+    name: string;
+    email: string;
+    image: string;
+    title: string;
+    chatNotification: boolean;
+
+    constructor(id: string, name: string, email: string, image: string, title: string, chatNotification: boolean) {
         this.id = id;
         this.name = name;
         this.email = email;

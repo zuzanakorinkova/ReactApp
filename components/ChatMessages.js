@@ -21,7 +21,7 @@ const ChatMessages = props => {
 
     let name;
     if (!isMe) {
-        name = 'From ' + props.chatmessage.user.loggedInUser.email
+        name = 'From ' + props.chatmessage.user.loggedInUser.name
     }
     return (
         <ScrollView style={styles.container}>

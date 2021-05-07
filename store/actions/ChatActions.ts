@@ -31,14 +31,15 @@ export const fetchChatrooms = () => {
                 chatrooms.push(new ChatRoom(key, data[key].name, new Date(data[key].created), []))
                 // chatrooms.forEach(chatroom => console.log(chatroom.id))
             }
-           // let chatroom = ''
-            // for(let i = 0; i < chatrooms.length; i++) {
-            //     chatroom.push(chatrooms[i].id)
-            // }
-           // console.log(chatroom)
+           let chatroom = []
+            for(let i = 0; i < chatrooms.length; i++) {
+                chatroom.push(chatrooms[i].id)
+            }
+            //console.log('----')
+          // console.log(chatroom)
             
             dispatch({ type: FETCHED_CHATROOMS, payload: chatrooms });
-            dispatch(fetchChatMessage());
+            dispatch(fetchChatMessage(chatroom));
         }
     };
 };
@@ -107,17 +108,17 @@ export const createChatMessage = (message: any, chatroomId: any) => {
         } else {
             chatMessages.id = data.name;
             dispatch({ type: NEW_CHATMESSAGE, payload: {chatMessages, chatroom}}) // chatMessages
-            dispatch(fetchChatMessage());
+            dispatch(fetchChatMessage(chatroom));
         }
     }
 };
 
 // export fetchChatMessage !!
 
-export const fetchChatMessage = () => {
+export const fetchChatMessage = (chatroomId: any) => {
     return async (dispatch: any, getState: any) => {
         const token = getState().user.idToken;
-        let chatroom =  '-MZigApreoa1w1o6djGA'  //chatroomId (chatroomId:any)
+        let chatroom =  chatroomId  //chatroomId (chatroomId:any) -MZigApreoa1w1o6djGA
         //console.log('==')
         //console.log(chatroomId)
         const response = await fetch(
@@ -139,9 +140,9 @@ export const fetchChatMessage = () => {
             for (const key in data) {
                 chatMessages.push(new ChatMessages(key, data[key].message, new Date(data[key].created), data[key].user))
             }
-            //console.log(chatMessages)
+            console.log(chatMessages)
 
-            dispatch({ type: FETCHED_CHATMESSAGES, payload: chatMessages}); //{chatMessages, chatroom}
+            dispatch({ type: FETCHED_CHATMESSAGES, payload: {chatMessages, chatroomId}}); //{chatMessages, chatroom}
         }
     };
 };

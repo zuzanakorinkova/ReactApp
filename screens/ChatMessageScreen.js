@@ -7,16 +7,17 @@ import {createChatMessage} from '../store/actions/ChatActions';
 import Input from '../components/common/Input';
 import ChatMessages from '../components/ChatMessages'
 
+
 const ChatMessagesScreen = props => {
     const dispatch = useDispatch();
     const { id } = props.route.params
     console.log(id);
 
-    const [value, onInputText] = useState('WriteMessage');
+    const [value, onInputText] = useState('Write Message');
 
     const chatMessages = useSelector(state => state.chat.chatMessages)
-    console.log('--')
-    console.log(chatMessages)
+   // console.log('--')
+    //console.log(chatMessages)
     
 
     const handleSend = () => {
@@ -26,6 +27,7 @@ const ChatMessagesScreen = props => {
 
     return (
         <View>
+           
             <View>
                 <FlatList data={chatMessages} renderItem={itemData => (
                     <ChatMessages chatmessage={itemData.item}></ChatMessages>
