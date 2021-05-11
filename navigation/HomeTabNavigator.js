@@ -7,11 +7,11 @@ import ChatMessagesScreen from '../screens/ChatMessageScreen';
 import NewChatRoom from '../screens/NewChatRoom';
 import ProfileScreen from '../screens/ProfileScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
+import SearchChatScreen from '../screens/SearchChatScreen';
 import HomeScreen from '../screens/HomeScreen';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -34,7 +34,7 @@ function ChatStackNavigator() {
         <Stack.Navigator>
             <Stack.Screen name="Chat" 
             options={{ headerRight: () => (
-                <Button onPress={onPress = () =>  navigation.navigate('New ChatRoom')} type="clear" icon={
+                <Button onPress={onPress = () =>  navigation.navigate('Search Chat')} type="clear" icon={
                     <Ionicons
                       name="ios-create-outline"
                       size={25}
@@ -48,6 +48,7 @@ function ChatStackNavigator() {
             component={ChatScreen} />
             <Stack.Screen name="ChatMessages" component={ChatMessagesScreen} options={options} />
             <Stack.Screen name="New ChatRoom" component={NewChatRoom} options={options} />
+            <Stack.Screen name="Search Chat" component={SearchChatScreen} options={options}/>
         </Stack.Navigator>
     )
 }

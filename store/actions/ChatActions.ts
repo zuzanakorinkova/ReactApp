@@ -108,6 +108,7 @@ export const createChatMessage = (message: any, chatroomId: any) => {
         } else {
             chatMessages.id = data.name;
             dispatch({ type: NEW_CHATMESSAGE, payload: {chatMessages, chatroom}}) // chatMessages
+            dispatch(fetchChatrooms());
         }
     }
 };
