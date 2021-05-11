@@ -1,14 +1,17 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Text, Button, StyleSheet, } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import ChatScreen from '../screens/ChatScreen';
 import ChatMessagesScreen from '../screens/ChatMessageScreen';
 import NewChatRoom from '../screens/NewChatRoom';
 import ProfileScreen from '../screens/ProfileScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
+import SearchChatScreen from '../screens/SearchChatScreen';
 import HomeScreen from '../screens/HomeScreen';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
+import { Button } from 'react-native-elements';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -26,11 +29,26 @@ const options = {
 };
 
 function ChatStackNavigator() {
+    const navigation = useNavigation();
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Chat" component={ChatScreen}  options={options} />
+            <Stack.Screen name="Chat" 
+            options={{ headerRight: () => (
+                <Button onPress={onPress = () =>  navigation.navigate('Search Chat')} type="clear" icon={
+                    <Ionicons
+                      name="ios-create-outline"
+                      size={25}
+                      color="#4f52a0"/>}
+                      />),
+            headerStyle: {backgroundColor: '#fff',},
+            headerTintColor: '#4f52a0',
+            headerTitleStyle: {textTransform: 'uppercase',},
+            cardStyle: { backgroundColor: '#FFFFFF' },
+            }}
+            component={ChatScreen} />
             <Stack.Screen name="ChatMessages" component={ChatMessagesScreen} options={options} />
             <Stack.Screen name="New ChatRoom" component={NewChatRoom} options={options} />
+            <Stack.Screen name="Search Chat" component={SearchChatScreen} options={options}/>
         </Stack.Navigator>
     )
 }
