@@ -6,6 +6,7 @@ import ChatScreen from '../screens/ChatScreen';
 import ChatMessagesScreen from '../screens/ChatMessageScreen';
 import NewChatRoom from '../screens/NewChatRoom';
 import ProfileScreen from '../screens/ProfileScreen';
+import EditProfileScreen from '../screens/EditProfileScreen';
 import HomeScreen from '../screens/HomeScreen';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -37,6 +38,7 @@ function ProfileStackNavigator() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Profile" component={ProfileScreen}  options={options} />
+            <Stack.Screen name="Edit Profile" component={EditProfileScreen} options={options} />
         </Stack.Navigator>
     )
 }

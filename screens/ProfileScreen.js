@@ -1,16 +1,30 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet, } from 'react-native';
+import { DarkPurple, Purple } from '../assets/colors';
+import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 const ProfileScreen = props => {
+    const navigation = useNavigation()
+    const userInfo = useSelector(state => state.user.loggedInUser)
+    //console.log(userInfo)
+    //let name = userInfo.name
+
     return (
         <View>
-            <Text>Profile</Text>
+            <View>
+                <Text style={styles.text}>{userInfo.name}</Text>
+                <Text style={styles.text}>{userInfo.email}</Text>
+            </View>
+            <Button title="Edit profile" onPress={() => navigation.navigate("Edit Profile")}></Button>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-
+    text: {
+        color: DarkPurple,
+    }
 });
 
 export default ProfileScreen;

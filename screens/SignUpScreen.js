@@ -20,7 +20,7 @@ const SignUpScreen = props => {
 
     const handleSignUp = () => {
         //console.log('signing up')
-        dispatch(signup(email, password, name, title))
+        dispatch(signup(email, password))
     }
 
     return (

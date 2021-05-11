@@ -1,6 +1,7 @@
 import User from '../../models/User';
-import { SIGNUP, SIGNIN, SAVE_USER, UPDATE_USER } from '../actions/UserActions';
+import { SIGNUP, SIGNIN, SAVE_USER} from '../actions/UserActions';
 import {tassign} from 'tassign';
+import { useRoute } from '@react-navigation/core';
 ;
 export interface UserState {
     chatNotifications: User | undefined;
@@ -41,9 +42,8 @@ const UserReducer = (state: UserState = initialState, action: Action) => {
                 loggedInUser: action.payload.email,
                 idToken: action.payload.idToken,
             };
+              
         
-    
-         
         default:
             return state;
     }

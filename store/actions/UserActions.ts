@@ -1,10 +1,11 @@
 import User from "../../models/User";
 import {fetchChatrooms} from "./ChatActions";
 
-export const UPDATE_USER = 'UPDATE_USER';
+//export const UPDATE_USER = 'UPDATE_USER';
 export const SIGNUP = 'SIGNUP';
 export const SIGNIN = 'SIGNIN';
 export const SAVE_USER = 'SAVE_USER';
+export const UPDATE_USER = 'UPDATE_USER'
 
 export const saveUser = (user: any) => {
     return {type: SAVE_USER, payload:user};
@@ -47,7 +48,7 @@ export const signin = (email: any, password: any) => {
             })
         });
         const data = await response.json();
-        console.log(data)
+        //console.log(data)
         if (!response.ok) {
             console.log(data.error.message)
         } else {
@@ -58,34 +59,30 @@ export const signin = (email: any, password: any) => {
     }
 }
 
-export const updateUserInfo = (name: any, chatNotifications: any) => {
-    return async (dispatch: any, getState: any) => {
-        const token = getState().user.idToken;
-        const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyCRRKVYBM8k8vyxWfoKlzutNKcFbic0V3g', {
-            method: 'POST',
+export const updateUser = (userName: any, userEmail: any) => {
+    return async (dispatch: any, getState: any) => { 
+        const token = getState().idToken;
+        let user = new User('', userName, userEmail, '', '', false) 
+        const response = await fetch('https://cbsstudents-9a50e-default-rtdb.firebaseio.com/users.json?auth=' + token, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
+            
             body: JSON.stringify({
-                idToken: token,
-                displayName: name,
-                chatNotifications: chatNotifications,
-            })
+                name: user.name,
+                email: user.email,
+               // title: user.title
+            }),
         });
         const data = await response.json();
-        console.log(data);
-
-        if (!response.ok) {
-            console.log(data.error)
-            //There was a problem..
-        } else {
-            dispatch({ type: UPDATE_USER, payload: data}); //{chatMessages, chatroom}
-            }
-            //console.log(chatMessages)
-
-          
+        console.log(data)
+        if(!response.ok){
+            //console.log(data.error.message)
+        }else {
+            dispatch({type: UPDATE_USER, payload: data})
         }
-
     }
-
+}
+//, email: any, title: any
 
