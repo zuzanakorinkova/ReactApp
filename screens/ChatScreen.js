@@ -18,7 +18,7 @@ const ChatScreen = props => {
         <View>
              <View style={styles.notificationContainer}>
                 <Text style={styles.notificationText}>Enable Notifications to stay on the loop</Text>
-               <TouchableOpacity onPress={onPress = () =>  console.log(userNotifications)}><Ionicons name={'ios-notifications'} size={25} color={'white'} /></TouchableOpacity>
+               <TouchableOpacity onPress={onPress = () =>  navigation.navigate('Profile')}><Ionicons name={'ios-notifications'} size={25} color={'white'} /></TouchableOpacity>
             </View>
             <View>
             <Button

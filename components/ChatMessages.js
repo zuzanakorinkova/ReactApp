@@ -9,6 +9,7 @@ import Input from '../components/common/Input';
 
 const ChatMessages = props => {
 
+
     const loggedInUserId = useSelector(state => state.user.loggedInUser.id)
     
     const hours = props.chatmessage.created.getHours();

@@ -11,11 +11,13 @@ import ChatMessages from '../components/ChatMessages'
 const ChatMessagesScreen = props => {
     const dispatch = useDispatch();
     const { id } = props.route.params
-    console.log(id);
+    
 
     const [value, onInputText] = useState('Write Message');
 
-    const chatMessages = useSelector(state => state.chat.chatMessages)
+    //const chatMessages = useSelector(state => state.chat.chatMessages)
+    const chatroom = useSelector(state => state.chat.chatrooms).find(room => room.id == id)
+    const chatMessages = chatroom.chatMessages
    // console.log('--')
     //console.log(chatMessages)
     
