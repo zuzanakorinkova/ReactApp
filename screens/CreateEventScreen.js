@@ -9,9 +9,7 @@ import Input from '../components/common/Input';
 const CreateEventScreen = props => {
     const dispatch = useDispatch();
     const { id } = props.route.params
-    const chatroom = useSelector(state => state.chat.chatrooms).find(room => room.id == id)
-    const events = chatroom.events
-
+  
     const [title, setTitle] = useState('')
     const [titleValid, setTitleValid] = useState(false)
 
@@ -27,7 +25,7 @@ const CreateEventScreen = props => {
     const [locationValid, setLocationValid] = useState(false)
 
     const handleSave = () => {
-        dispatch(createEvent(title, description, startDate, endDate, location))
+        dispatch(createEvent(title, description, startDate, endDate, location, id))
     }
     
     return (
