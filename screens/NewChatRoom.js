@@ -24,7 +24,7 @@ const NewChatRoom = props => {
                     label="Chatroom name"
                     error="Please fill out the Chatroom name"
                     text={chatroomName}
-                    nameValid={chatroomNameValid}
+                    textValid={chatroomNameValid}
                     onValid={textValid => setChatroomNameValid(textValid)}
                     setContent={content => setChatroomName(content)}
                 />

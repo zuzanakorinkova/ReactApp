@@ -37,7 +37,10 @@ export const fetchChatrooms = () => {
                     loadedMessages.push(msg);
  
                     }
-                chatrooms.push(new ChatRoom(key, data[key].name, new Date(data[key].created), loadedMessages))
+
+                const loadedEvents = []
+
+                chatrooms.push(new ChatRoom(key, data[key].name, new Date(data[key].created), loadedMessages, loadedEvents))
                 // chatrooms.forEach(chatroom => console.log(chatroom.id))
             }
             
@@ -48,7 +51,7 @@ export const fetchChatrooms = () => {
 
 export const createChatroom = (chatroomName: any) => {
     return async (dispatch: any, getState: any) => {
-        let chatroom = new ChatRoom('', chatroomName, new Date() , [])
+        let chatroom = new ChatRoom('', chatroomName, new Date() , [], [])
         const token = getState().user.idToken;
 
         const response = await fetch(

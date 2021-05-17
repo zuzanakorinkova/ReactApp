@@ -8,6 +8,8 @@ import NewChatRoom from '../screens/NewChatRoom';
 import ProfileScreen from '../screens/ProfileScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
 import SearchChatScreen from '../screens/SearchChatScreen';
+import AllClubsScreen from '../screens/AllClubsScreen';
+import CreateEventScreen from '../screens/CreateEventScreen';
 import HomeScreen from '../screens/HomeScreen';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
@@ -64,6 +66,8 @@ function HomeStackNavigator() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Home" component={HomeScreen}  options={options} />
+            <Stack.Screen name="All Clubs" component={AllClubsScreen} options={options} />
+            <Stack.Screen name="Create Event" component={CreateEventScreen} options={options} />
         </Stack.Navigator>
     )
 }
