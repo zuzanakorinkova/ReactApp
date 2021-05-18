@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Button, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { LightGrey, LightPurple, Purple } from '../assets/colors';
-import {UserState} from '../store/reducers/ChatReducers';
+import {UserState} from '../store/reducers/ClubReducers';
 import Input from '../components/common/Input';
 
 

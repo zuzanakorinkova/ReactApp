@@ -1,5 +1,5 @@
 import User from "../../models/User";
-import {fetchChatrooms} from "./ChatActions";
+import {fetchClubs} from "./ClubActions";
 
 //export const UPDATE_USER = 'UPDATE_USER';
 export const SIGNUP = 'SIGNUP';
@@ -31,7 +31,7 @@ export const signup = ( email: any, password: any) => {
         } else {
             dispatch({ type: SIGNUP, payload: data });
             //console.log(email);
-            dispatch(fetchChatrooms());
+            dispatch(fetchClubs());
         }
     }
 }
@@ -53,7 +53,7 @@ export const signin = (email: any, password: any) => {
             console.log(data.error.message)
         } else {
             dispatch({ type: SIGNUP, payload: data });
-            dispatch(fetchChatrooms());
+            dispatch(fetchClubs());
             //console.log(email);
         }
     }

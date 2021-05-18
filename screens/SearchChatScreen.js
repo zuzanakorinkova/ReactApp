@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native-elements';
 
 const SearchChatScreen = props => {
-const chatrooms = useSelector(state => state.chat.chatrooms);
+const clubs = useSelector(state => state.club.clubs);
 const navigation = useNavigation()
 const [search, setSearch] = useState('');
  return (
@@ -25,16 +25,16 @@ const [search, setSearch] = useState('');
        </View>
        <View>
        <FlatList
-                data={chatrooms}
+                data={clubs}
                 renderItem={itemData => (
-                    <Suggestions chatroom={itemData.item} />
+                    <Suggestions club={itemData.item} />
                 )}
                 keyExtractor={item => item.id}
             />
        </View>
        <View>
-       <Button onPress={onPress = () =>  navigation.navigate('New ChatRoom')} type="clear"
-       title="Add new chatroom"
+       <Button onPress={() =>  navigation.navigate('New Club')} type="clear"
+       title="Add new club"
        icon={
         <Ionicons
             name="ios-add-outline"

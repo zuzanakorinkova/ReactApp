@@ -9,7 +9,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 const ChatScreen = props => {
     const dispatch = useDispatch()
 
-    const chatrooms = useSelector(state => state.chat.chatrooms);
+    const chatrooms = useSelector(state => state.club.clubs);
+    console.log(chatrooms)
     const userNotifications = useSelector(state => state.user.loggedInUser.chatNotification)
    
     const navigation = useNavigation();
@@ -18,7 +19,7 @@ const ChatScreen = props => {
         <View>
              <View style={styles.notificationContainer}>
                 <Text style={styles.notificationText}>Enable Notifications to stay on the loop</Text>
-               <TouchableOpacity onPress={onPress = () =>  navigation.navigate('Profile')}><Ionicons name={'ios-notifications'} size={25} color={'white'} /></TouchableOpacity>
+               <TouchableOpacity onPress={() =>  navigation.navigate('Profile')}><Ionicons name={'ios-notifications'} size={25} color={'white'} /></TouchableOpacity>
             </View>
             <FlatList
                 data={chatrooms}

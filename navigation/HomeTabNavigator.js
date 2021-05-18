@@ -4,10 +4,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import ChatScreen from '../screens/ChatScreen';
 import ChatMessagesScreen from '../screens/ChatMessageScreen';
-import NewChatRoom from '../screens/NewChatRoom';
+import NewClub from '../screens/NewClub';
 import ProfileScreen from '../screens/ProfileScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
 import SearchChatScreen from '../screens/SearchChatScreen';
+import AllClubsScreen from '../screens/AllClubsScreen';
+import CreateEventScreen from '../screens/CreateEventScreen';
 import HomeScreen from '../screens/HomeScreen';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
@@ -34,7 +36,7 @@ function ChatStackNavigator() {
         <Stack.Navigator>
             <Stack.Screen name="Chat" 
             options={{ headerRight: () => (
-                <Button onPress={onPress = () =>  navigation.navigate('Search Chat')} type="clear" icon={
+                <Button onPress={() =>  navigation.navigate('Search Chat')} type="clear" icon={
                     <Ionicons
                       name="ios-create-outline"
                       size={25}
@@ -47,7 +49,7 @@ function ChatStackNavigator() {
             }}
             component={ChatScreen} />
             <Stack.Screen name="ChatMessages" component={ChatMessagesScreen} options={options} />
-            <Stack.Screen name="New ChatRoom" component={NewChatRoom} options={options} />
+            <Stack.Screen name="New Club" component={NewClub} options={options} />
             <Stack.Screen name="Search Chat" component={SearchChatScreen} options={options}/>
         </Stack.Navigator>
     )
@@ -64,6 +66,8 @@ function HomeStackNavigator() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Home" component={HomeScreen}  options={options} />
+            <Stack.Screen name="All Clubs" component={AllClubsScreen} options={options} />
+            <Stack.Screen name="Create Event" component={CreateEventScreen} options={options} />
         </Stack.Navigator>
     )
 }

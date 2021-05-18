@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet} from 'react-native';
+import { View, Text, Button, StyleSheet,TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const ChatRoom = props => {
+    // chatroom = club name
     const navigation = useNavigation();
 
     const lastPosition = props.chatroom.chatMessages.length - 1
