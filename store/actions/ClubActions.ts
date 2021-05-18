@@ -41,7 +41,7 @@ export const fetchClubs = () => {
                     loadedMessages.push(msg);
                     }
                 for (const key3 in data[key].events) {
-                    let event = new Events(key3, data[key].events[key3].title, data[key].events[key3].description, data[key].events[key3].date, data[key].events[key3].fromTime, data[key].events[key3].untilTime, data[key].events[key3].location, [], '')
+                    let event = new Events(key3, data[key].events[key3].title, data[key].events[key3].description, data[key].events[key3].startDate, data[key].events[key3].endDate, data[key].events[key3].fromTime, data[key].events[key3].untilTime, data[key].events[key3].location, [], '')
                     loadedEvents.push(event)
                 }
 
@@ -121,11 +121,11 @@ export const createChatMessage = (message: any, clubId: any) => {
 };
 
 
-export const createEvent = (title: any, description: any, date: any, fromTime: any, untilTime: any, location: any, clubId: any) => {
+export const createEvent = (title: any, description: any, startDate: any, endDate: any, fromTime: any, untilTime: any, location: any, clubId: any) => {
     return async (dispatch: any, getState: any) => {
         const token = getState().user.idToken
 
-        let event = new Events('', title, description, date, fromTime, untilTime, location, [], '');
+        let event = new Events('', title, description, startDate, endDate, fromTime, untilTime, location, [], '');
         let club = clubId;
 
         const response = await fetch(
@@ -138,7 +138,8 @@ export const createEvent = (title: any, description: any, date: any, fromTime: a
             body: JSON.stringify({
                 title: event.title,
                 description: event.description,
-                date: event.date,
+                startDate: event.startDate,
+                endDate: event.endDate,
                 fromTime: event.fromTime,
                 untilTime: event.untilTime,
                 location: event.location,

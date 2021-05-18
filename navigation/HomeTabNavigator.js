@@ -21,6 +21,7 @@ const Stack = createStackNavigator();
 
 
 const options = {
+    
     headerStyle: {
         backgroundColor: '#fff',
     },
@@ -29,6 +30,7 @@ const options = {
         textTransform: 'uppercase',
     },
     cardStyle: { backgroundColor: '#FFFFFF' },
+    
 };
 
 function ChatStackNavigator() {
@@ -36,17 +38,19 @@ function ChatStackNavigator() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Chat" 
-            options={{ headerRight: () => (
+            options={
+            { headerRight: () => (
                 <Button onPress={() =>  navigation.navigate('Search Chat')} type="clear" icon={
                     <Ionicons
                       name="ios-create-outline"
                       size={25}
                       color="#4f52a0"/>}
                       />),
-            headerStyle: {backgroundColor: '#fff',},
+            headerStyle: {backgroundColor: '#fff'},
             headerTintColor: '#4f52a0',
             headerTitleStyle: {textTransform: 'uppercase',},
             cardStyle: { backgroundColor: '#FFFFFF' },
+            
             }}
             component={ChatScreen} />
             <Stack.Screen name="ChatMessages" component={ChatMessagesScreen} options={options} />
@@ -64,12 +68,24 @@ function ProfileStackNavigator() {
     )
 }
 function HomeStackNavigator() {
+    const navigation = useNavigation();
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Home" component={HomeScreen}  options={options} />
+            <Stack.Screen name="Home" component={HomeScreen}   options={{ headerRight: () => (
+                <Button onPress={() =>  navigation.navigate('All Clubs')} type="clear" icon={
+                    <Ionicons
+                      name="ios-add-outline"
+                      size={25}
+                      color="#4f52a0"/>}
+                      />),
+                        headerStyle: {backgroundColor: '#fff',},
+                        headerTintColor: '#4f52a0',
+                        headerTitleStyle: {textTransform: 'uppercase',},
+                        cardStyle: { backgroundColor: '#FFFFFF' },
+                        }} />
             <Stack.Screen name="All Clubs" component={AllClubsScreen} options={options} />
             <Stack.Screen name="Create Event" component={CreateEventScreen} options={options} />
-            <Stack.Screen name="Single Event" component={SingleEventScreen} options={options} />
+            <Stack.Screen name="Single Event" component={SingleEventScreen} options={({ route }) => ({ title: route.params.name,  headerTintColor: '#4f52a0',  headerTitleStyle: {textTransform: 'uppercase',},cardStyle: { backgroundColor: '#FFFFFF' },})} />
         </Stack.Navigator>
     )
 }
