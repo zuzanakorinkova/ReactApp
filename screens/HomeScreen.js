@@ -1,19 +1,34 @@
 import React from 'react';
 import ChatRoom from '../components/ChatRoom';
-import { View, Text, Button, StyleSheet, } from 'react-native';
+import Events from '../components/Events';
+import { View, Text, Button, StyleSheet, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 
 const HomeScreen = props => {
     const navigation = useNavigation();
+    // select clubs id and pass it through Flatlist
+    const allData = useSelector(state => state.club.clubs)
+   //console.log(clubs)
+   const clubs = []
+   for (const key in allData){
+      clubs.push(allData[key])
+   }
+  // console.log(clubs.id)
 
-    const clubs = useSelector(state => state.club.clubs)
-    //console.log(events)
+
   // FETCH ALL EVENTS
     return (
         <View>
             <Button title="Add event" onPress={() => navigation.navigate('All Clubs')}/>
-            <Text>Menu</Text>
+            <View>
+            <View>
+                <FlatList data={clubs} renderItem={itemData => (
+                    <Events club={itemData.item}></Events>
+                )}
+                keyExtractor={item => item.id} />
+            </View>
+            </View>
         </View>
     );
 }

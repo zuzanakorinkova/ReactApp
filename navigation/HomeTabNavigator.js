@@ -10,6 +10,7 @@ import EditProfileScreen from '../screens/EditProfileScreen';
 import SearchChatScreen from '../screens/SearchChatScreen';
 import AllClubsScreen from '../screens/AllClubsScreen';
 import CreateEventScreen from '../screens/CreateEventScreen';
+import SingleEventScreen from '../screens/SingleEventScreen';
 import HomeScreen from '../screens/HomeScreen';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
@@ -68,6 +69,7 @@ function HomeStackNavigator() {
             <Stack.Screen name="Home" component={HomeScreen}  options={options} />
             <Stack.Screen name="All Clubs" component={AllClubsScreen} options={options} />
             <Stack.Screen name="Create Event" component={CreateEventScreen} options={options} />
+            <Stack.Screen name="Single Event" component={SingleEventScreen} options={options} />
         </Stack.Navigator>
     )
 }

@@ -34,15 +34,18 @@ export const fetchClubs = () => {
             
             for (const key in data) {
                 const loadedMessages = [];
- 
+                const loadedEvents = [];
                 for (const key2 in data[key].chatMessages) {
                     let msg = new ChatMessages(key2,data[key].chatMessages[key2].message, new Date(data[key].chatMessages[key2].created), data[key].chatMessages[key2].user);
  
                     loadedMessages.push(msg);
- 
                     }
+                for (const key3 in data[key].events) {
+                    let event = new Events(key3, data[key].events[key3].title, data[key].events[key3].description, data[key].events[key3].date, data[key].events[key3].fromTime, data[key].events[key3].untilTime, data[key].events[key3].location, [], '')
+                    loadedEvents.push(event)
+                }
 
-                clubs.push(new Clubs(key, data[key].name, new Date(data[key].created), loadedMessages, []))
+                clubs.push(new Clubs(key, data[key].name, new Date(data[key].created), loadedMessages, loadedEvents))
             }
             
             dispatch({ type: FETCHED_CLUBS, payload: clubs });
@@ -118,11 +121,11 @@ export const createChatMessage = (message: any, clubId: any) => {
 };
 
 
-export const createEvent = (title: any, description: any, startDate: any, endDate: any, location: any, clubId: any) => {
+export const createEvent = (title: any, description: any, date: any, fromTime: any, untilTime: any, location: any, clubId: any) => {
     return async (dispatch: any, getState: any) => {
         const token = getState().user.idToken
 
-        let event = new Events('', title, description, startDate, endDate, location, [], '');
+        let event = new Events('', title, description, date, fromTime, untilTime, location, [], '');
         let club = clubId;
 
         const response = await fetch(
@@ -135,8 +138,9 @@ export const createEvent = (title: any, description: any, startDate: any, endDat
             body: JSON.stringify({
                 title: event.title,
                 description: event.description,
-                startDate: event.startDate,
-                endDate: event.endDate,
+                date: event.date,
+                fromTime: event.fromTime,
+                untilTime: event.untilTime,
                 location: event.location,
             })
 
@@ -148,35 +152,9 @@ export const createEvent = (title: any, description: any, startDate: any, endDat
         } else {
             event.id = data.name;
             dispatch({ type: NEW_EVENT, payload: {event, club}}) // chatMessages
+            dispatch(fetchClubs())
         }
     }
 };
 
-export const fetchEvent = () => {
-    return async (dispatch: any, getState: any) => {
-        const token = getState().user.idToken
-
-        const response = await fetch(
-            'https://cbsstudents-9a50e-default-rtdb.firebaseio.com/clubs/events.json?auth=' + token, {
-
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
-        const data = await response.json();
-         console.log(data);
-        if (!response.ok) {
-            console.log('There was a problem')
-        } else {
-            let events: Events[] = [];
-            for (const key in data){
-                events.push(new Events(key, data[key].title, data[key].description, data[key].startDate, data[key].endDate,data[key].location, [], data[key].thumbnail))
-            }
-           
-    
-            dispatch({ type: FETCHED_EVENTS, payload: {events}}) 
-        }
-    }
-};
 

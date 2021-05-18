@@ -4,18 +4,20 @@ class Event {
     id: string;
     title: string;
     description: string;
-    startDate: Date;
-    endDate: Date;
+    date: Date;
+    fromTime: Date;
+    untilTime
     location: string;
     users: User[];
     thumbnail: string;
 
-    constructor(id: string, title: string, desctiption: string, startDate: Date, endDate: Date, location: string, users: User[], thumbnail: string) {
+    constructor(id: string, title: string, desctiption: string, date: Date, fromTime: Date, untilTime: Date, location: string, users: User[], thumbnail: string) {
         this.id = id;
         this.title = title;
         this.description = desctiption;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.date = date;
+        this.fromTime = fromTime;
+        this.untilTime = untilTime;
         this.location = location;
         this.users = users;
         this.thumbnail = thumbnail;
