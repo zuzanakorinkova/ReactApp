@@ -1,7 +1,7 @@
 import ChatMessages from './ChatMessages'
 import Events from './Events'
 
-class ChatRoom {
+class Clubs {
     id: string;
     name: string;
     created: Date;
@@ -18,4 +18,4 @@ class ChatRoom {
 }
 // there is no password because we dont want to save users' data
 
-export default ChatRoom;
+export default Clubs;

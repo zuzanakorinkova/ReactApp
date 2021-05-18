@@ -5,7 +5,7 @@ import { TouchableHighlight } from 'react-native-gesture-handler';
 const Suggestions = props => {
  return (
     <View>
-        <Text style={styles.club}>{props.chatroom.name}</Text>
+        <Text style={styles.club}>{props.club.name}</Text>
     </View>
  );
 }

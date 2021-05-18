@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ChatRoom from '../components/ChatRoom';
 import { View, Text, Button, StyleSheet, FlatList, TextInput } from 'react-native';
 
-import {createChatMessage} from '../store/actions/ChatActions';
+import {createChatMessage} from '../store/actions/ClubActions';
 import Input from '../components/common/Input';
 import ChatMessages from '../components/ChatMessages'
 
@@ -16,7 +16,7 @@ const ChatMessagesScreen = props => {
     const [value, onInputText] = useState('Write Message');
 
     //const chatMessages = useSelector(state => state.chat.chatMessages)
-    const chatroom = useSelector(state => state.chat.chatrooms).find(room => room.id == id)
+    const chatroom = useSelector(state => state.club.clubs).find(chat => chat.id == id)
     const chatMessages = chatroom.chatMessages
    // console.log('--')
     //console.log(chatMessages)

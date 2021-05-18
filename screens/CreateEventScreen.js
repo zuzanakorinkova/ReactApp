@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { View, Text, Button, StyleSheet, FlatList, TextInput } from 'react-native';
-import {createEvent} from '../store/actions/EventActions';
+import {createEvent} from '../store/actions/ClubActions';
 import Input from '../components/common/Input';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 
 
 
 const CreateEventScreen = props => {
+    const navigatiion = useNavigation()
     const dispatch = useDispatch();
     const { id } = props.route.params
   
@@ -26,6 +28,7 @@ const CreateEventScreen = props => {
 
     const handleSave = () => {
         dispatch(createEvent(title, description, startDate, endDate, location, id))
+        navigatiion.navigate('Home')
     }
     
     return (

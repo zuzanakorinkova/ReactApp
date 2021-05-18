@@ -6,9 +6,9 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 const ChatRoom = props => {
     const navigation = useNavigation();
     return (
-        <TouchableOpacity onPress={() => navigation.navigate("Create Event", {id: props.chatroom.id})} style={styles.chatContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate("Create Event", {id: props.club.id})} style={styles.chatContainer}>
             <View>
-                <Text style={styles.chatTitle}>{props.chatroom.name}</Text>
+                <Text style={styles.chatTitle}>{props.club.name}</Text>
             </View>
         </TouchableOpacity>
     );
