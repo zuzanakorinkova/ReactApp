@@ -21,7 +21,7 @@ const initialState: ClubState = {
     user: [],
 }
 
-const ChatReducer = (state = initialState, action: Action) => {
+const ClubReducer = (state = initialState, action: Action) => {
     switch (action.type) {
         case FETCHED_CLUBS:
             return tassign(state, {clubs: action.payload});
@@ -67,4 +67,4 @@ const ChatReducer = (state = initialState, action: Action) => {
     }
 }
 
-export default ChatReducer;
+export default ClubReducer;

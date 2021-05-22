@@ -3,7 +3,7 @@ import { View, Text, Button, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const ChatRoom = props => {
+const Clubs = props => {
     const navigation = useNavigation();
     return (
         <TouchableOpacity onPress={() => navigation.navigate("Create Event", {id: props.club.id})} style={styles.chatContainer}>
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ChatRoom;
+export default Clubs;
 
 
 
