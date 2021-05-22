@@ -10,6 +10,7 @@ export const FETCHED_CLUBS = 'FETCHED_CLUBS';
 
 export const NEW_EVENT = 'NEW_EVENT';
 export const FETCHED_EVENTS = 'FETCH_EVENTS'
+export const PUSH_USER = 'PUSH_USER'
 
 export const fetchClubs = () => {
     return async (dispatch: any, getState: any) => {
@@ -30,18 +31,22 @@ export const fetchClubs = () => {
             //There was a problem..
         } else {
             let clubs: Clubs[] = [];
-
             
             for (const key in data) {
                 const loadedMessages = [];
                 const loadedEvents = [];
+                const loadedEventUsers = [];
                 for (const key2 in data[key].chatMessages) {
                     let msg = new ChatMessages(key2,data[key].chatMessages[key2].message, new Date(data[key].chatMessages[key2].created), data[key].chatMessages[key2].user);
  
                     loadedMessages.push(msg);
                     }
                 for (const key3 in data[key].events) {
-                    let event = new Events(key3, data[key].events[key3].title, data[key].events[key3].description, data[key].events[key3].startDate, data[key].events[key3].endDate, data[key].events[key3].fromTime, data[key].events[key3].untilTime, data[key].events[key3].location, [], '')
+                    for (const key4 in data[key].events[key3].users) {
+                        let user = new User(key4, data[key].events[key3].users[key4].name, data[key].events[key3].users[key4].email, data[key].events[key3].users[key4].image, data[key].events[key3].users[key4].title, data[key].events[key3].users[key4].chatNotification)
+                        loadedEventUsers.push(user)
+                    }
+                    let event = new Events(key3, data[key].events[key3].title, data[key].events[key3].description, data[key].events[key3].startDate, data[key].events[key3].endDate, data[key].events[key3].fromTime, data[key].events[key3].untilTime, data[key].events[key3].location, loadedEventUsers, '')
                     loadedEvents.push(event)
                 }
 
@@ -147,7 +152,7 @@ export const createEvent = (title: any, description: any, startDate: any, endDat
 
         });
         const data = await response.json();
-         console.log(data);
+         //console.log(data);
         if (!response.ok) {
             console.log('There was a problem')
         } else {
@@ -157,5 +162,35 @@ export const createEvent = (title: any, description: any, startDate: any, endDat
         }
     }
 };
+
+export const pushUser = (loggedInUser: any, clubId:any, eventId: any) => {
+    return async (dispatch: any, getState: any) => {
+        const token = getState().user.idToken
+        let user = loggedInUser
+        let event = eventId
+        let club = clubId
+        const response = await fetch(
+            'https://cbsstudents-9a50e-default-rtdb.firebaseio.com/clubs/' + club + '/events/' + event + '/users.json?auth=' + token, {
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                users: user
+            })
+
+        });
+        const data = await response.json();
+        console.log(data);
+       if (!response.ok) {
+           console.log('There was a problem')
+       } else {
+           user.id = data.name;
+           dispatch({ type: PUSH_USER, payload: {user, club, event}}) // chatMessages
+       }
+    }
+    
+}
 
 

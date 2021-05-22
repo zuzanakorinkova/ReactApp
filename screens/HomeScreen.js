@@ -11,7 +11,7 @@ const HomeScreen = props => {
     const navigation = useNavigation();
     // select clubs id and pass it through Flatlist
     const allData = useSelector(state => state.club.clubs)
-   //console.log(clubs)
+
    const clubs = []
    const events = []
    for (const key in allData){
