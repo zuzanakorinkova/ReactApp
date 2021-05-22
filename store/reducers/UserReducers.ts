@@ -1,8 +1,8 @@
 import User from '../../models/User';
-import { SIGNUP, SIGNIN, SAVE_USER} from '../actions/UserActions';
+import { SIGNUP, SIGNUP_DETAILS, SIGNIN, UPDATE_USER} from '../actions/UserActions';
 import {tassign} from 'tassign';
 import { useRoute } from '@react-navigation/core';
-;
+
 export interface UserState {
     chatNotifications: User | undefined;
     loggedInUser: User | undefined;
@@ -20,6 +20,7 @@ const initialState: UserState = {
     idToken: undefined,
 }
 
+
 const UserReducer = (state: UserState = initialState, action: Action) => {
     switch (action.type) {
         case SIGNUP:
@@ -30,19 +31,39 @@ const UserReducer = (state: UserState = initialState, action: Action) => {
                     idToken: action.payload.idToken,
                 }
             };
-
-        case SAVE_USER:
+        case SIGNUP_DETAILS:
             {
-                return tassign(state, {loggedInUser: action.payload, idToken: action.payload.idToken})
-            }
-            
+                console.log("Reducer name: " + action.payload)
+
+                const loggedInUser = state.loggedInUser
+                const userInfo: User = {...loggedInUser}
+                userInfo.name = action.payload;
+                console.log("UserInfo name: " + userInfo.name)
+
+                // return {...state, loggedInUser: userInfo };
+                return tassign(state, { loggedInUser: userInfo});
+            };
+
         case SIGNIN:
             return {
                 ...state,
-                loggedInUser: action.payload.email,
+                loggedInUser: new User(action.payload.localId, '', action.payload.email, '', '', false),
                 idToken: action.payload.idToken,
             };
-              
+
+        case UPDATE_USER:
+            {
+                console.log("Reducer update  name: " + action.payload)
+
+                const loggedInUser = state.loggedInUser
+                const userInfo: User = {...loggedInUser}
+                userInfo.name = action.payload;
+                console.log("UserInfo name: " + userInfo.name)
+
+                // return {...state, loggedInUser: userInfo };
+                return tassign(state, { loggedInUser: userInfo});
+                // return tassign(state, {loggedInUser: action.payload})
+            };
         
         default:
             return state;

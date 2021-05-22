@@ -7,8 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 const ProfileScreen = props => {
     const navigation = useNavigation()
     const userInfo = useSelector(state => state.user.loggedInUser)
-    //console.log(userInfo)
-    //let name = userInfo.name
+    console.log("Profile name: " + userInfo.name);
 
     return (
         <View>
