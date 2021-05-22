@@ -17,7 +17,7 @@ const ChatMessages = props => {
 
     const userIdOfMessage = props.chatmessage.user.loggedInUser.id;
     //console.log(userIdOfMessage)
-    const isMe = loggedInUserId === userIdOfMessage; // const isMe = hardcodedUserId === userIdOfMessage
+    const isMe = loggedInUserId === userIdOfMessage; 
     //console.log(isMe)
 
     let name;
