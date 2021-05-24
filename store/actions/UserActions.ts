@@ -54,13 +54,13 @@ export const signupDetails = (name: any) => {
             
 //             body: JSON.stringify({
 //                 name: name,
-//                // title: user.title
+                // title: user.title
 //             }),
 //         });
 //         const data = await response.json();
 //         console.log(data);
 //         if(!response.ok){
-//             //console.log(data.error.message)
+             //console.log(data.error.message)
 //         }else {
 //             dispatch({type: SIGNUP_DETAILS, payload: data})
 //         }
@@ -110,13 +110,13 @@ export const updateUser = (name: any) => {
 //             body: JSON.stringify({
 //                 name: user.name,
 //                 email: user.email,
-//                // title: user.title
+                // title: user.title
 //             }),
 //         });
 //         const data = await response.json();
 //         console.log(data);
 //         if(!response.ok){
-//             //console.log(data.error.message)
+            //console.log(data.error.message)
 //         }else {
 //             dispatch({type: UPDATE_USER, payload: data})
 //         }

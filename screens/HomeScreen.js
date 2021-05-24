@@ -26,36 +26,15 @@ const HomeScreen = props => {
 
 
 //profile
-//   const dispatch = useDispatch();
-// 	const [title, setTitle] = useState("");
-// 	const [titleValid, setTitleValid] = useState("");
-// 	const [name, setName] = useState("");
-// 	const [nameValid, setNameValid] = useState("");
+  const dispatch = useDispatch();
+	const [name, setName] = useState("");
+	const [nameValid, setNameValid] = useState("");
 
-// 	const handleSignUp = () => {
-// 		//console.log('signing up')
-// 		dispatch(signupDetails(name));
-// 	};
+	const handleSignUp = () => {
+	console.log('signing up')
+		dispatch(signupDetails(name));
+	};
 
-//     const clubs = useSelector(state => state.club.clubs)
-//     //console.log(events)
-//   // FETCH ALL EVENTS
-//     return (
-//         <View>
-//             <Button title="Add event" onPress={() => navigation.navigate('All Clubs')}/>
-//             <Text>Menu</Text>
-//             <Text>----------------------</Text>
-//             <Input
-//                 label="Name"
-//                 text={name}
-//                 setContent={(content) => setName(content)}
-//                 textValid={nameValid}
-//                 onValid={(valid) => setNameValid(valid)}
-//                 error="Please fill out your name"
-//                 placeholder="Write your name"
-//                 secureTextEntry={true}
-//             />
-//             <Button title="Add name" onPress={handleSignUp}></Button>
 
   // FETCH ALL EVENTS
     return (
@@ -67,6 +46,20 @@ const HomeScreen = props => {
                 )}
                 keyExtractor={item => item.id} />
             </View>
+            </View>
+            <View>
+            <Text>----------------------</Text>
+             <Input
+                label="Name"
+                 text={name}
+                 setContent={(content) => setName(content)}
+                 textValid={nameValid}
+                 onValid={(valid) => setNameValid(valid)}
+                 error="Please fill out your name"
+                 placeholder="Write your name"
+                 secureTextEntry={true}
+             />
+             <Button title="Add name" onPress={handleSignUp}></Button>
             </View>
         </View>
     );

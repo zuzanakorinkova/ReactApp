@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ChatRoom from '../components/ChatRoom';
-import { View, Text, Button, StyleSheet, FlatList, TextInput } from 'react-native';
+import { DarkPurple, LightGrey, LightPurple, Purple } from '../assets/colors';
+import { View, Text, Button, StyleSheet, FlatList, TextInput, ScrollView } from 'react-native';
 
 import {createChatMessage} from '../store/actions/ClubActions';
 import Input from '../components/common/Input';
@@ -28,26 +29,46 @@ const ChatMessagesScreen = props => {
     };
 
     return (
-        <View>
-           
+        <View style={ styles.container}>
             <View>
                 <FlatList data={chatMessages} renderItem={itemData => (
                     <ChatMessages chatmessage={itemData.item}></ChatMessages>
                 )} />
             </View>
-            <View>
+
+            <View style={styles.writeMessage}>
                 <TextInput
+                    style={styles.input}
                     onChangeText={text => onInputText(text)}
                     value={value}
                 />
-                <Button title="Send" onPress={handleSend}></Button>
+                <Button color={DarkPurple} title="Send" onPress={handleSend}></Button>
             </View>
+ 
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-
+container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    padding: 10,
+},
+writeMessage: {
+    borderTopColor: LightGrey,
+    borderTopWidth: 1,
+    paddingTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+},
+input: {
+    backgroundColor: LightGrey,
+    width: '70%',
+    padding: 6,
+    color: 'grey',
+},
 });
 
 export default ChatMessagesScreen;

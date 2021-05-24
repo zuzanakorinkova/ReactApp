@@ -33,7 +33,7 @@ const ChatMessages = props => {
                     </Text>
                 </View>
                 <Text style={styles.underMessage}>{name}</Text>
-                <Text>{hours}:{minutes}</Text>  
+                <Text style={[styles.time, isMe ? styles.timeFromMe : '']}>{hours}:{minutes}</Text>  
             </View>
         </ScrollView>
     );
@@ -72,6 +72,13 @@ const styles = StyleSheet.create({
     underMessage: {
         color: 'grey',
         fontSize: 12,
+    },
+    timeFromMe: {
+        textAlign: 'right',
+    },
+    time: {
+        color: 'grey',
+        fontSize: 10,
     }
 
 
