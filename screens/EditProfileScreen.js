@@ -13,10 +13,7 @@ const EditProfileScreen = () => {
     const navigation = useNavigation();
 
     const handleSave = () => {
-        let user = {...profileInfo}
-        user.name = userName
-        console.log(user)
-        dispatch(updateUser(user))
+        dispatch(updateUser(userName));
         navigation.goBack();
     }
 
