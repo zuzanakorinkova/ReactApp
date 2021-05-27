@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ChatRoom from '../components/ChatRoom';
 import { DarkPurple, LightGrey, LightPurple, Purple } from '../assets/colors';
-import { View, Text, Button, StyleSheet, FlatList, TextInput, ScrollView } from 'react-native';
-
+import { View, Text, Button, StyleSheet, FlatList, TextInput } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import {createChatMessage} from '../store/actions/ClubActions';
 import Input from '../components/common/Input';
 import ChatMessages from '../components/ChatMessages'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const ChatMessagesScreen = props => {
@@ -42,7 +43,7 @@ const ChatMessagesScreen = props => {
                     onChangeText={text => onInputText(text)}
                     value={value}
                 />
-                <Button color={DarkPurple} title="Send" onPress={handleSend}></Button>
+                <TouchableOpacity style={styles.send} onPress={handleSend}><Ionicons name="ios-send" size={20} color="#fff"/></TouchableOpacity>
             </View>
  
         </View>
@@ -55,6 +56,7 @@ container: {
     flexDirection: 'column',
     justifyContent: 'space-between',
     padding: 10,
+    backgroundColor: '#fff',
 },
 writeMessage: {
     borderTopColor: LightGrey,
@@ -68,7 +70,13 @@ input: {
     width: '70%',
     padding: 6,
     color: 'grey',
+    borderRadius: 5,
 },
+send: {
+    backgroundColor: Purple,
+    padding: 15,
+    borderRadius: 5,
+}
 });
 
 export default ChatMessagesScreen;

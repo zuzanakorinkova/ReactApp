@@ -29,7 +29,7 @@ const options = {
     headerTitleStyle: {
         textTransform: 'uppercase',
     },
-    cardStyle: { backgroundColor: '#FFFFFF' },
+    cardStyle: { backgroundColor: '#f2f2f2' },
     
 };
 
@@ -49,7 +49,7 @@ function ChatStackNavigator() {
             headerStyle: {backgroundColor: '#fff'},
             headerTintColor: '#4f52a0',
             headerTitleStyle: {textTransform: 'uppercase',},
-            cardStyle: { backgroundColor: '#FFFFFF' },
+            cardStyle: { backgroundColor: '#f2f2f2' },
             
             }}
             component={ChatScreen} />
@@ -81,11 +81,11 @@ function HomeStackNavigator() {
                         headerStyle: {backgroundColor: '#fff',},
                         headerTintColor: '#4f52a0',
                         headerTitleStyle: {textTransform: 'uppercase',},
-                        cardStyle: { backgroundColor: '#FFFFFF' },
+                        cardStyle: { backgroundColor: '#f2f2f2' },
                         }} />
             <Stack.Screen name="All Clubs" component={AllClubsScreen} options={options} />
             <Stack.Screen name="Create Event" component={CreateEventScreen} options={options} />
-            <Stack.Screen name="Single Event" component={SingleEventScreen} options={({ route }) => ({ title: route.params.name,  headerTintColor: '#4f52a0',  headerTitleStyle: {textTransform: 'uppercase',},cardStyle: { backgroundColor: '#FFFFFF' },})} />
+            <Stack.Screen name="Single Event" component={SingleEventScreen} options={({ route }) => ({ title: route.params.name,  headerTintColor: '#4f52a0',  headerTitleStyle: {textTransform: 'uppercase',},cardStyle: { backgroundColor: '#f2f2f2' },})} />
         </Stack.Navigator>
     )
 }

@@ -22,6 +22,7 @@ const Input = (props) => {
                 placeholder={props.placeholder}
                 onChangeText={handleNewInput}
                 onBlur={() => setTouched(true)}
+                secureTextEntry={props.label == 'Password' ? true : false}
             />{!props.textValid && touched && <Text>{props.error}</Text>}
         </View>
     );
@@ -30,8 +31,6 @@ const Input = (props) => {
 const styles = StyleSheet.create({
     input: {
         padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: 'lightgrey',
     }
 });
 

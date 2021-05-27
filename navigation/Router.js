@@ -10,6 +10,7 @@ import SignUpScreen from '../screens/SignUpScreen';
 import SignInScreen from '../screens/SignInScreen';
 import Loading from '../screens/LoadingScreen';
 
+
 const Stack = createStackNavigator();
 
 const Router = props => {
@@ -19,7 +20,6 @@ const Router = props => {
         }, 500)
     }, [])
     const [isLoading, setIsLoading] = useState(true)
-
 
     const options = {
         headerStyle: {
@@ -31,6 +31,7 @@ const Router = props => {
         },
         cardStyle: { backgroundColor: '#FFFFFF' },
     };
+
     const idToken = useSelector(state => state.user.idToken)
     return (
         <NavigationContainer>
