@@ -12,15 +12,19 @@ const rootReducer = combineReducers({
   user: UserReducer,
   club: ClubReducer,
 });
+
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
 
 const App = props => {
+
+
   return (
     <Provider store={store}>
       <StatusBar barStyle="dark-content" />
       <Router />
     </Provider>
   );
+
 };
 
 const styles = StyleSheet.create({

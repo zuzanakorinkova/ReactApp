@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	View,
 	Text,
@@ -6,15 +6,18 @@ import {
 	StyleSheet,
 	Image,
 	TouchableOpacity,
+	Pressable,
 } from "react-native";
-import { DarkPurple } from "../assets/colors";
+import { DarkPurple, LightGrey, LightPurple, Purple } from "../assets/colors";
 import { useDispatch } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { NavigationHelpersContext, useNavigation } from "@react-navigation/native";
 import Input from "../components/common/Input";
 import { signup } from "../store/actions/UserActions";
 import { signupDetails } from "../store/actions/UserActions";
 
+
 const SignUpScreen = (props) => {
+
 	const navigation = useNavigation();
 	const dispatch = useDispatch();
 	const [title, setTitle] = useState("");
@@ -34,8 +37,8 @@ const SignUpScreen = (props) => {
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.logoContainer}>
-				<Image source={require("../assets/logo.png")} />
+			<View>
+				<Image style={styles.logo} source={require("../assets/logo.png")} />
 				<Text style={styles.heading}>Signup to get access</Text>
 			</View>
 			<View style={styles.formContainer}>
@@ -73,9 +76,9 @@ const SignUpScreen = (props) => {
 					{/* <Input label="Confirm password" newName={newName} nameValid={nameValid} handleNewInput={handleNewInput}
                     error="Passwords dont match" placeholder="Confirm your password" secureTextEntry={true} /> */}
 				</View>
-				<Button title="Sign up" onPress={handleSignUp}></Button>
-				<TouchableOpacity onPress={() => navigation.navigate("Signin")}>
-					<Text>Already have an account? Login</Text>
+				<Pressable style={styles.button} onPress={handleSignUp}><Text style={styles.buttonText}>Sign up</Text></Pressable>
+				<TouchableOpacity style={styles.login} onPress={() => navigation.navigate("Signin")}>
+					<Text style={styles.loginText}>Already have an account? <Text style={{fontWeight: 'bold'}}>Login</Text></Text>
 				</TouchableOpacity>
 			</View>
 		</View>
@@ -85,22 +88,54 @@ const SignUpScreen = (props) => {
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: "white",
+		padding: 20,
 	},
-	logoContainer: {
-		alignItems: "center",
+	logo: {
+		alignSelf: "center",
+		height: 100,
+		width: 100,
+		marginBottom: 20,
 	},
 	heading: {
 		color: DarkPurple,
 		fontWeight: "700",
-		fontSize: 17,
-	},
-	formContainer: {
-		margin: 15,
-	},
-	inputContainer: {
-		borderWidth: 1,
+		fontSize: 20,
 		marginBottom: 10,
 	},
+	formContainer: {
+		margin: 10,
+	},
+	inputContainer: {
+		marginBottom: 20,
+		borderRadius: 5,
+		elevation:5,
+		shadowColor: '#000',
+		shadowOpacity: 0.2,
+		backgroundColor: 'white',
+		shadowRadius: 5, 
+		borderWidth: 1,
+		borderColor: LightGrey,
+		padding: 10,
+	},
+	button: {
+		marginTop: 30,
+		backgroundColor: Purple,
+		padding: 20,
+		borderRadius: 5,
+	},
+	buttonText: {
+		color: 'white',
+		fontSize: 17,
+		fontWeight: 'bold',
+	},
+	login: {
+		marginTop: 50,
+		alignSelf: 'center',
+	},
+	loginText: {
+		color: DarkPurple,
+	}
+
 });
 
 export default SignUpScreen;

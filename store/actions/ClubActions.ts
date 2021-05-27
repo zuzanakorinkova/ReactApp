@@ -188,6 +188,7 @@ export const pushUser = (loggedInUser: any, clubId:any, eventId: any) => {
        } else {
            user.id = data.name;
            dispatch({ type: PUSH_USER, payload: {user, club, event}}) // chatMessages
+           dispatch(fetchClubs())
        }
     }
     

@@ -38,7 +38,7 @@ const HomeScreen = props => {
 
   // FETCH ALL EVENTS
     return (
-        <View style={styles.container}>
+        <View>
             <View>
             <View>
                 <FlatList data={events} renderItem={itemData => (
@@ -66,10 +66,7 @@ const HomeScreen = props => {
 }
 
 const styles = StyleSheet.create({
-container: {
-    backgroundColor: "#f2f2f2",
-    height: '100%',
-}
+
 });
 
 export default HomeScreen;
