@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { DarkPurple, LightGrey, LightPurple, Purple, DarkGrey } from '../assets/colors';
-import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity, Image } from 'react-native';
 import { Button } from 'react-native-elements';
 import Clubs from '../components/Clubs';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import {pushUser} from '../store/actions/ClubActions';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 const SingleEventScreen = props => {
@@ -19,7 +20,7 @@ const SingleEventScreen = props => {
     let userId = ''
     let userLength = ''
     let description = ''
-    
+    let thumbnail = ''
     const { id } = props.route.params
     const clubs = useSelector(state => state.club.clubs);
     let clubId = ''
@@ -27,6 +28,7 @@ const SingleEventScreen = props => {
        if(clubs[key].events.find(event => event.id == id)) {
            clubId = clubs[key].id
            for(const key1 in clubs[key].events){
+               thumbnail = clubs[key].events[key1].thumbnail
                clubName = clubs[key].name
                startDate = clubs[key].events[key1].startDate
                endDate = clubs[key].events[key1].endDate
@@ -41,6 +43,7 @@ const SingleEventScreen = props => {
            }
        }
     }
+
     const dispatch = useDispatch()
     const loggedInUser = useSelector(state => state.user.loggedInUser)
     const handlePushUser = () => {
@@ -51,37 +54,43 @@ const SingleEventScreen = props => {
        }
         
     }
+    
 
     const navigation = useNavigation();
  
     return (
         <View>
-            <View style={styles.event}>
-                <Text style={styles.title}>{props.route.params.name}</Text>
-                <View style={styles.containerTime}>
-                    <Ionicons style={styles.icon} name="ios-time" size={15} color={DarkGrey}/>
-                    <Text style={styles.time}>{startDate} ⋅ </Text>
-                    <Text style={styles.time}>{fromTime} - </Text>
-                    <Text style={styles.time}>{endDate} ⋅ </Text>
-                    <Text style={styles.time}>{untilTime}</Text>
+            <ScrollView>
+                <View>
+                    <Image style={styles.image} source={{uri:thumbnail}} />
                 </View>
-                <View style={styles.containerTime}>
-                    <Ionicons style={styles.icon} name="ios-location" size={15} color={DarkGrey}/>
-                    <Text style={styles.location}>{location}</Text>
+                <View style={styles.event}>
+                    <Text style={styles.title}>{props.route.params.name}</Text>
+                    <View style={styles.containerTime}>
+                        <Ionicons style={styles.icon} name="ios-time" size={15} color={DarkGrey}/>
+                        <Text style={styles.time}>{startDate} ⋅ </Text>
+                        <Text style={styles.time}>{fromTime} - </Text>
+                        <Text style={styles.time}>{endDate} ⋅ </Text>
+                        <Text style={styles.time}>{untilTime}</Text>
+                    </View>
+                    <View style={styles.containerTime}>
+                        <Ionicons style={styles.icon} name="ios-location" size={15} color={DarkGrey}/>
+                        <Text style={styles.location}>{location}</Text>
+                    </View>
+                    <View style={styles.containerClub}>
+                        <Text style={styles.clubName}>{clubName}</Text>
+                        <TouchableOpacity onPress={() =>  navigation.navigate('Chat')}><Ionicons style={styles.chatIcon} name={'ios-chatbubbles'} size={25} color={'white'} /></TouchableOpacity>
+                    </View>
+                    <View style={styles.containerUser}>
+                        <Text style={styles.goingText}>Going ⋅ {userLength.length}</Text>
+                        <TouchableOpacity style={loggedInUser.id == userId ? styles.btnPress : styles.button} onPress={handlePushUser}><Ionicons style={loggedInUser.id == userId ? styles.goingPress : styles.goingIcon} name="ios-checkbox-outline" size={20}/><Text style={loggedInUser.id == userId ? styles.btnPressText : styles.buttonText}>Going</Text></TouchableOpacity>
+                    </View>
                 </View>
-                <View style={styles.containerClub}>
-                    <Text style={styles.clubName}>{clubName}</Text>
-                    <TouchableOpacity onPress={() =>  navigation.navigate('Chat')}><Ionicons style={styles.chatIcon} name={'ios-chatbubbles'} size={25} color={'white'} /></TouchableOpacity>
+                <View style={styles.containerAbout}>
+                    <Text style={styles.about}>About</Text>
+                    <Text>{description}</Text>
                 </View>
-                <View style={styles.containerUser}>
-                    <Text style={styles.goingText}>Going ⋅ {userLength.length}</Text>
-                    <TouchableOpacity style={styles.button} onPress={handlePushUser}><Ionicons style={{paddingRight: 10,}} name="ios-checkbox-outline" size={20} color={Purple}/><Text style={styles.buttonText}>Going</Text></TouchableOpacity>
-                </View>
-            </View>
-            <View style={styles.containerAbout}>
-                <Text style={styles.about}>About</Text>
-                <Text>{description}</Text>
-            </View>
+            </ScrollView>
         </View>
     );
 }
@@ -94,6 +103,9 @@ event: {
     shadowOpacity: 0.3,
     padding: 20,
     backgroundColor: '#fff', 
+},
+image: {
+    height: 200,
 },
 title: {
     fontSize: 23,
@@ -172,6 +184,29 @@ buttonText: {
     color: Purple,
     fontWeight: '700',
     fontSize: 16,
+},
+btnPress: {
+    backgroundColor: Purple,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingTop: 5,
+    paddingBottom: 5,
+    borderRadius: 5,
+},
+btnPressText: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 16,
+},
+goingIcon: {
+    color: Purple,
+    paddingRight: 10,
+},
+goingPress: {
+    color: 'white',
+    paddingRight: 10,
 }
 
 });

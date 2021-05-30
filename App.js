@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Router from './navigation/Router';
 import UserReducer from './store/reducers/UserReducers';
@@ -7,6 +7,7 @@ import ClubReducer from './store/reducers/ClubReducers';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
+
 
 const rootReducer = combineReducers({
   user: UserReducer,

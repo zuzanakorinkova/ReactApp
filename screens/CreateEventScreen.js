@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Text, Button, StyleSheet, FlatList, TextInput } from 'react-native';
+import { View, Text, Button, StyleSheet, FlatList, TextInput, Platform, Alert, Image, ScrollView } from 'react-native';
 import {createEvent} from '../store/actions/ClubActions';
 import Input from '../components/common/Input';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import * as ImagePicker from 'expo-image-picker';
+import Constant from 'expo-constants';
+
 
 
 
@@ -30,14 +33,46 @@ const CreateEventScreen = props => {
     const [location, setLocation] = useState('')
     const [locationValid, setLocationValid] = useState(false)
 
+    const [image, setImage] = useState(null)
+
+    useEffect(() => {
+        (async () => {
+          if (Platform.OS !== 'web') {
+            const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (status !== 'granted') {
+              alert('Sorry, we need camera roll permissions to make this work!');
+            }
+          }
+        })();
+      }, []);
+
+    const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+    });
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+
     const handleSave = () => {
-        dispatch(createEvent(title, description, startDate, endDate, fromTime, untilTime, location, id))
+        dispatch(createEvent(title, description, startDate, endDate, fromTime, untilTime, location, image, id))
         navigatiion.navigate('Home')
     }
+
     
     return (
         <View style={styles.container}>
+            <ScrollView>
           <View>
+              <Button title="Choose Image" onPress={pickImage} />
+              {image && <Image source={{uri:image}} style={styles.pickImage} />}
             <Input
                 style={styles.inputField}
                 label="Event title"
@@ -107,6 +142,7 @@ const CreateEventScreen = props => {
                         />
              <Button title="Save" onPress={handleSave} />
           </View>
+          </ScrollView>
         </View>
     );
 }
@@ -120,7 +156,10 @@ dates: {
     flexDirection: 'row',
     justifyContent: 'space-around',
 },
-
+pickImage: {
+    width: 200,
+    height: 200,
+}
     
 });
 

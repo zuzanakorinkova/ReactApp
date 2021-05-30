@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet,TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import {Avatar} from 'react-native-elements';
 
 const ChatRoom = props => {
     // chatroom = club name
@@ -17,9 +18,12 @@ const ChatRoom = props => {
     }
     return (
         <TouchableOpacity onPress={() => navigation.navigate("ChatMessages", {id: props.chatroom.id})} style={styles.chatContainer}>
-            <View>
-                <Text style={styles.chatTitle}>{props.chatroom.name}</Text>
-                <Text ellipsizeMode='tail' numberOfLines={1}>{lastMessage}</Text>
+            <View style={styles.club}>
+                <Avatar rounded source={{uri:props.chatroom.image}} />   
+                <View>
+                    <Text style={styles.chatTitle}>{props.chatroom.name}</Text>
+                    <Text style={styles.message} ellipsizeMode='tail' numberOfLines={1}>{lastMessage}</Text>
+                </View>
             </View>
             <View style={styles.rightContainer}>
                 <Text>🟣</Text>
@@ -30,6 +34,10 @@ const ChatRoom = props => {
 }
 
 const styles = StyleSheet.create({
+    club: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
     chatContainer: {
         flex: 1,
         flexDirection: 'row',
@@ -37,8 +45,12 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     chatTitle: {
+        marginLeft: 15,
         fontSize: 15,
         fontWeight: 'bold',
+    },
+    message: {
+        marginLeft: 15,
     },
     rightContainer: {
         alignItems: 'flex-end',
