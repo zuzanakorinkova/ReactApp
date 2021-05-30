@@ -46,11 +46,11 @@ export const fetchClubs = () => {
                         let user = new User(key4, data[key].events[key3].users[key4].name, data[key].events[key3].users[key4].email, data[key].events[key3].users[key4].image, data[key].events[key3].users[key4].title, data[key].events[key3].users[key4].chatNotification)
                         loadedEventUsers.push(user)
                     }
-                    let event = new Events(key3, data[key].events[key3].title, data[key].events[key3].description, data[key].events[key3].startDate, data[key].events[key3].endDate, data[key].events[key3].fromTime, data[key].events[key3].untilTime, data[key].events[key3].location, loadedEventUsers, '')
+                    let event = new Events(key3, data[key].events[key3].title, data[key].events[key3].description, data[key].events[key3].startDate, data[key].events[key3].endDate, data[key].events[key3].fromTime, data[key].events[key3].untilTime, data[key].events[key3].location, loadedEventUsers, data[key].events[key3].thumbnail)
                     loadedEvents.push(event)
                 }
 
-                clubs.push(new Clubs(key, data[key].name, new Date(data[key].created), loadedMessages, loadedEvents))
+                clubs.push(new Clubs(key, data[key].name, data[key].image, new Date(data[key].created), loadedMessages, loadedEvents))
             }
             
             dispatch({ type: FETCHED_CLUBS, payload: clubs });
@@ -58,9 +58,9 @@ export const fetchClubs = () => {
     };
 };
 
-export const createClub = (clubName: any) => {
+export const createClub = (clubName: any, image: any) => {
     return async (dispatch: any, getState: any) => {
-        let club = new Clubs('', clubName, new Date() , [], [])
+        let club = new Clubs('', clubName, image, new Date() , [], [])
         const token = getState().user.idToken;
 
         const response = await fetch(
@@ -71,6 +71,7 @@ export const createClub = (clubName: any) => {
             },
             body: JSON.stringify({
                 name: club.name,
+                image: club.image,
                 created: club.created,
                 chatMessages: club.chatMessages
             })
@@ -126,11 +127,11 @@ export const createChatMessage = (message: any, clubId: any) => {
 };
 
 
-export const createEvent = (title: any, description: any, startDate: any, endDate: any, fromTime: any, untilTime: any, location: any, clubId: any) => {
+export const createEvent = (title: any, description: any, startDate: any, endDate: any, fromTime: any, untilTime: any, location: any, thumbnail: any, clubId: any) => {
     return async (dispatch: any, getState: any) => {
         const token = getState().user.idToken
 
-        let event = new Events('', title, description, startDate, endDate, fromTime, untilTime, location, [], '');
+        let event = new Events('', title, description, startDate, endDate, fromTime, untilTime, location, [], thumbnail);
         let club = clubId;
 
         const response = await fetch(
@@ -148,6 +149,7 @@ export const createEvent = (title: any, description: any, startDate: any, endDat
                 fromTime: event.fromTime,
                 untilTime: event.untilTime,
                 location: event.location,
+                thumbnail: event.thumbnail
             })
 
         });
