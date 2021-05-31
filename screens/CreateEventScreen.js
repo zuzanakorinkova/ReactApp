@@ -6,6 +6,7 @@ import Input from '../components/common/Input';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import Constant from 'expo-constants';
+import { registerRootComponent } from 'expo';
 
 
 
@@ -56,7 +57,7 @@ const CreateEventScreen = props => {
     console.log(result);
 
     if (!result.cancelled) {
-      setImage(result.uri);
+      setImage(result.uri)
     }
   };
 

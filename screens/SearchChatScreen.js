@@ -13,7 +13,6 @@ const clubs = useSelector(state => state.club.clubs);
 //console.log('====')
 
 const navigation = useNavigation()
-const [search, setSearch] = useState('');
 const [club, setClub] = useState(null)
 
 useEffect(() => {
