@@ -12,6 +12,7 @@ import AllClubsScreen from '../screens/AllClubsScreen';
 import CreateEventScreen from '../screens/CreateEventScreen';
 import SingleEventScreen from '../screens/SingleEventScreen';
 import HomeScreen from '../screens/HomeScreen';
+import DiscoverScreen from '../screens/DiscoverScreen';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native-elements';
@@ -89,6 +90,16 @@ function HomeStackNavigator() {
         </Stack.Navigator>
     )
 }
+
+function DiscoverStackNavigator() {
+    const navigation = useNavigation();
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Discover" component={DiscoverScreen} options={options} />
+        </Stack.Navigator>
+    )
+}
+
 const HomeTabNavigator = props => {
     return (
         <Tab.Navigator
@@ -104,6 +115,8 @@ const HomeTabNavigator = props => {
                         iconName = focused ? 'ios-chatbox-ellipses-outline' : 'ios-chatbox-outline';
                     } else if (route.name === 'Profile') {
                         iconName = focused ? 'ios-list' : 'ios-menu-outline';
+                    } else if (route.name === 'Discover'){
+                        iconName = focused ? 'ios-search' : 'ios-search-outline';
                     }
 
                     // You can return any component that you like here!
@@ -114,8 +127,9 @@ const HomeTabNavigator = props => {
                 activeTintColor: '#4f52a0',
                 inactiveTintColor: 'gray',
                 labelStyle: {
-                    fontSize: 15,
+                    fontSize: 14,
                     textTransform: 'uppercase',
+                    padding: 5,
                 },
                 style: {
                     height: 70,
@@ -128,6 +142,10 @@ const HomeTabNavigator = props => {
                 component={HomeStackNavigator}
             />
             <Tab.Screen
+                name={'Discover'}
+                component={DiscoverStackNavigator}
+            />
+            <Tab.Screen
                 name={'Chat'}
                 component={ChatStackNavigator}
             />
@@ -135,6 +153,7 @@ const HomeTabNavigator = props => {
                 name={'Profile'}
                 component={ProfileStackNavigator}
             />
+      
         </Tab.Navigator>
     );
 }
