@@ -40,7 +40,6 @@ const DiscoverScreen = props => {
 
             <View style={styles.container}>
                 <ImageOverlay containerStyle={styles.events} title="All events" titleStyle={styles.title} overlayColor={Pink} overlayAlpha={0.8}  source={{uri: 'https://images.pexels.com/photos/1157557/pexels-photo-1157557.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'}} />
-                <Image  />
             </View>
            
     
