@@ -6,24 +6,34 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 const Clubs = props => {
     const navigation = useNavigation();
     return (
-        <TouchableOpacity onPress={() => navigation.navigate("Create Event", {id: props.club.id})} style={styles.chatContainer}>
-            <View>
-                <Text style={styles.chatTitle}>{props.club.name}</Text>
-            </View>
-        </TouchableOpacity>
+        <View style={styles.container}>
+            <Text>Create event for:</Text>
+            <TouchableOpacity onPress={() => navigation.navigate("Create Event", {id: props.club.id})} >
+                <View>
+                    <Text style={styles.clubTitle}>{props.club.name}</Text>
+                </View>
+            </TouchableOpacity>
+            <Text>Create post for:</Text>
+            <TouchableOpacity onPress={() => navigation.navigate("Create Post", {id: props.club.id})}>
+                <View>
+                    <Text style={styles.clubTitle}>{props.club.name}</Text>
+                </View>
+            </TouchableOpacity>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
-    chatContainer: {
+    container: {
         flex: 1,
-        flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 20,
     },
-    chatTitle: {
+    clubTitle: {
         fontSize: 15,
         fontWeight: 'bold',
+        paddingTop: 10,
+        paddingBottom: 10,
     },
 });
 
