@@ -71,9 +71,10 @@ const CreateEventScreen = props => {
     return (
         <View style={styles.container}>
             <ScrollView>
-          <View>
+          
               <Button title="Choose Image" onPress={pickImage} />
               {image && <Image source={{uri:image}} style={styles.pickImage} />}
+            <View style={styles.fields}>
             <Input
                 style={styles.inputField}
                 label="Event title"
@@ -141,8 +142,9 @@ const CreateEventScreen = props => {
                     textValid={locationValid}
                     onValid={textValid => setLocationValid(textValid)}
                         />
+            </View>
              <Button title="Save" onPress={handleSave} />
-          </View>
+          
           </ScrollView>
         </View>
     );
@@ -160,6 +162,11 @@ dates: {
 pickImage: {
     width: 200,
     height: 200,
+},
+fields: {
+    margin: 5,
+    padding: 10,
+    borderWidth: 1,
 }
     
 });

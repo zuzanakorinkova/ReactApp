@@ -9,6 +9,8 @@ import ProfileScreen from '../screens/ProfileScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
 import SearchChatScreen from '../screens/SearchChatScreen';
 import AllClubsScreen from '../screens/AllClubsScreen';
+import AllPostsScreen from '../screens/AllPostsScreen';
+import AllEventsScreen from '../screens/AllEventsScreen';
 import CreateEventScreen from '../screens/CreateEventScreen';
 import CreatePostScreen from '../screens/CreatePostScreen';
 import PostOrEventScreen from '../screens/PostOrEventScreen';
@@ -100,6 +102,8 @@ function DiscoverStackNavigator() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Discover" component={DiscoverScreen} options={options} />
+            <Stack.Screen name="All Events" component={AllEventsScreen} options={options} />
+            <Stack.Screen name="All Posts" component={AllPostsScreen} options={options} /> 
         </Stack.Navigator>
     )
 }
