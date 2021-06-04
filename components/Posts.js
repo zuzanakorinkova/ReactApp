@@ -6,15 +6,20 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import PostOrEventScreen from '../screens/PostOrEventScreen';
 import { DarkPurple, Purple, LightGrey } from '../assets/colors';
 import { useSelector, useDispatch } from 'react-redux';
+import {Avatar} from 'react-native-elements';
 
 const Posts = props => {
 
-    const clubs = useSelector(state => state.club.clubs)
 
+    const clubs = useSelector(state => state.club.clubs)
+    let clubName = ''
+    let clubImage = ''
     for(const key in clubs){
-        console.log(clubs[key].posts)
         for (const key1 in clubs[key].posts){
-            console.log(clubs[key].posts[key1].id) 
+            if(clubs[key].posts[key1].id == props.post.id){
+                clubName = clubs[key].name
+                clubImage = clubs[key].image
+            }
             // if this id == id of the current prop post -> display the club
         }
     }
@@ -40,6 +45,10 @@ const Posts = props => {
                     <Text style={styles.likes}>1</Text>
                 </TouchableOpacity>
             </View> 
+            <View style={styles.clubContainer}>
+                <Avatar rounded source={{uri:clubImage}} /> 
+                <Text style={styles.club}>{clubName}</Text>
+            </View>
         </View>
         
     </View>
@@ -55,7 +64,7 @@ container: {
     shadowColor: '#000',
     shadowOpacity: 0.2,
     shadowRadius: 5, 
-    padding: 10,
+    padding: 15,
 },
 blog: {
     flexDirection: 'row',
@@ -76,6 +85,16 @@ timeContainer: {
     justifyContent: 'space-between',
     borderBottomWidth: 1,
     borderColor: LightGrey,
+},
+clubContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 5,
+},
+club: {
+    fontWeight: 'bold',
+    marginLeft: 10,
+    textTransform: 'uppercase',
 },
 time: {
     paddingTop: 10,
