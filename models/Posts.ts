@@ -17,3 +17,5 @@ class Post {
         this.created = created;
     }
 }
+
+export default Post

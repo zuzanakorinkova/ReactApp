@@ -9,7 +9,11 @@ import ProfileScreen from '../screens/ProfileScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
 import SearchChatScreen from '../screens/SearchChatScreen';
 import AllClubsScreen from '../screens/AllClubsScreen';
+import AllPostsScreen from '../screens/AllPostsScreen';
+import AllEventsScreen from '../screens/AllEventsScreen';
 import CreateEventScreen from '../screens/CreateEventScreen';
+import CreatePostScreen from '../screens/CreatePostScreen';
+import PostOrEventScreen from '../screens/PostOrEventScreen';
 import SingleEventScreen from '../screens/SingleEventScreen';
 import HomeScreen from '../screens/HomeScreen';
 import DiscoverScreen from '../screens/DiscoverScreen';
@@ -86,6 +90,8 @@ function HomeStackNavigator() {
                         }} />
             <Stack.Screen name="All Clubs" component={AllClubsScreen} options={options} />
             <Stack.Screen name="Create Event" component={CreateEventScreen} options={options} />
+            <Stack.Screen name="Create Post" component={CreatePostScreen} options={options} />
+            <Stack.Screen name="Post or Event" component={PostOrEventScreen} options={options} />
             <Stack.Screen name="Single Event" component={SingleEventScreen} options={({ route }) => ({ title: route.params.name,  headerTintColor: '#4f52a0',  headerTitleStyle: {textTransform: 'uppercase',},cardStyle: { backgroundColor: '#f2f2f2' },})} />
         </Stack.Navigator>
     )
@@ -96,6 +102,8 @@ function DiscoverStackNavigator() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Discover" component={DiscoverScreen} options={options} />
+            <Stack.Screen name="All Events" component={AllEventsScreen} options={options} />
+            <Stack.Screen name="All Posts" component={AllPostsScreen} options={options} /> 
         </Stack.Navigator>
     )
 }

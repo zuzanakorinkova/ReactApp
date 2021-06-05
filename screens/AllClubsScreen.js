@@ -13,12 +13,10 @@ import { useNavigation } from '@react-navigation/native';
 const AllClubsScreen = props => {
     const clubs = useSelector(state => state.club.clubs);
     // DISPLAY ALL CHATROOMS *CLUB* FOR WHICH THEN CREATE AN EVENT
-    const dispatch = useDispatch()
-
-    const navigation = useNavigation();
  
     return (
         <View>
+
           
               <FlatList
                 data={clubs}
@@ -27,6 +25,7 @@ const AllClubsScreen = props => {
                 )}
                 keyExtractor={item => item.id}
             />
+
 
         
         </View>

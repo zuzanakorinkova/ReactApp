@@ -1,7 +1,8 @@
 import User from '../../models/User';
 import ChatMessages from '../../models/ChatMessages';
 import Clubs from '../../models/Clubs';
-import Events from '../../models/Events'
+import Events from '../../models/Events';
+import Posts from '../../models/Posts';
 
 
 export const NEW_CHATMESSAGE = 'NEW_CHATMESSAGE';
@@ -9,8 +10,9 @@ export const NEW_CLUB = 'NEW_CLUB';
 export const FETCHED_CLUBS = 'FETCHED_CLUBS';
 
 export const NEW_EVENT = 'NEW_EVENT';
-export const FETCHED_EVENTS = 'FETCH_EVENTS'
-export const PUSH_USER = 'PUSH_USER'
+export const FETCHED_EVENTS = 'FETCH_EVENTS';
+export const PUSH_USER = 'PUSH_USER';
+export const NEW_POST = 'NEW_POST';
 
 export const fetchClubs = () => {
     return async (dispatch: any, getState: any) => {
@@ -35,22 +37,28 @@ export const fetchClubs = () => {
             for (const key in data) {
                 const loadedMessages = [];
                 const loadedEvents = [];
+                const loadedPosts = [];
                 const loadedEventUsers = [];
+                
                 for (const key2 in data[key].chatMessages) {
                     let msg = new ChatMessages(key2,data[key].chatMessages[key2].message, new Date(data[key].chatMessages[key2].created), data[key].chatMessages[key2].user);
  
                     loadedMessages.push(msg);
                     }
-                for (const key3 in data[key].events) {
-                    for (const key4 in data[key].events[key3].users) {
-                        let user = new User(key4, data[key].events[key3].users[key4].name, data[key].events[key3].users[key4].email, data[key].events[key3].users[key4].image, data[key].events[key3].users[key4].title, data[key].events[key3].users[key4].chatNotification)
+                for (const key2 in data[key].events) {
+                    for (const key3 in data[key].events[key2].users) {
+                        let user = new User(key3, data[key].events[key2].users[key3].name, data[key].events[key2].users[key3].email, data[key].events[key2].users[key3].image, data[key].events[key2].users[key3].title, data[key].events[key2].users[key3].chatNotification)
                         loadedEventUsers.push(user)
                     }
-                    let event = new Events(key3, data[key].events[key3].title, data[key].events[key3].description, data[key].events[key3].startDate, data[key].events[key3].endDate, data[key].events[key3].fromTime, data[key].events[key3].untilTime, data[key].events[key3].location, loadedEventUsers, data[key].events[key3].thumbnail)
+                    let event = new Events(key2, data[key].events[key2].title, data[key].events[key2].description, data[key].events[key2].startDate, data[key].events[key2].endDate, data[key].events[key2].fromTime, data[key].events[key2].untilTime, data[key].events[key2].location, loadedEventUsers, data[key].events[key2].thumbnail)
                     loadedEvents.push(event)
                 }
+                for (const key2 in data[key].posts) {
+                    let post = new Posts(key2, data[key].posts[key2].title, data[key].posts[key2].content, [], [], new Date(data[key].posts[key2].created))
+                    loadedPosts.push(post)
+                } 
 
-                clubs.push(new Clubs(key, data[key].name, data[key].image, new Date(data[key].created), loadedMessages, loadedEvents))
+                clubs.push(new Clubs(key, data[key].name, data[key].image, new Date(data[key].created), loadedMessages, loadedEvents, loadedPosts))
             }
             
             dispatch({ type: FETCHED_CLUBS, payload: clubs });
@@ -60,7 +68,7 @@ export const fetchClubs = () => {
 
 export const createClub = (clubName: any, image: any) => {
     return async (dispatch: any, getState: any) => {
-        let club = new Clubs('', clubName, image, new Date() , [], [])
+        let club = new Clubs('', clubName, image, new Date() , [], [], [])
         const token = getState().user.idToken;
 
         const response = await fetch(
@@ -184,7 +192,7 @@ export const pushUser = (loggedInUser: any, clubId:any, eventId: any) => {
 
         });
         const data = await response.json();
-        console.log(data);
+        //console.log(data);
        if (!response.ok) {
            console.log('There was a problem')
        } else {
@@ -194,6 +202,35 @@ export const pushUser = (loggedInUser: any, clubId:any, eventId: any) => {
        }
     }
     
+};
+
+export const createPost = (title: any, content: any, clubId: any) => {
+    return async (dispatch: any, getState: any) => {
+        const token = getState().user.idToken
+        let club = clubId
+        let post = new Posts('', title, content, [], [], new Date());
+        const response = await fetch(
+            'https://cbsstudents-9a50e-default-rtdb.firebaseio.com/clubs/' + club + '/posts.json?auth=' + token, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: post.title,
+                    content: post.content,
+                    created: post.created
+                })
+            });
+            const data = await response.json();
+            console.log(data)
+            if(!response.ok) {
+                console.log('something went wrong')
+            } else {
+                post.id = data.name
+                dispatch({type: NEW_POST, payload: {post, club}})
+                dispatch(fetchClubs());
+            }
+    }
 }
 
 
