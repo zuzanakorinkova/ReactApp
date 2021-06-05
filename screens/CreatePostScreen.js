@@ -20,7 +20,7 @@ const CreatePostScreen = props => {
 
 const handleSave = () => {
    dispatch(createPost(title,content,id))
-   navigatiion.navigate('All Posts')
+   navigatiion.navigate('Home')
 }
 
  return (

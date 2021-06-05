@@ -64,7 +64,7 @@ const CreateEventScreen = props => {
 
     const handleSave = () => {
         dispatch(createEvent(title, description, startDate, endDate, fromTime, untilTime, location, image, id))
-        navigatiion.navigate('All Events')
+        navigatiion.navigate('Home')
     }
 
     
