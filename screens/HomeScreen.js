@@ -66,11 +66,9 @@ const HomeScreen = props => {
         <FlatList
             data={clubs}
             renderItem={(itemData) => (
-                <EventsAndPosts home={itemData.item}
+                <EventsAndPosts home={itemData.item}/>
+                )}
                 keyExtractor={item => item.id} 
-                />
-            )}
-
         />
     </View>
         

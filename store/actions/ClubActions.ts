@@ -231,6 +231,38 @@ export const createPost = (title: any, content: any, clubId: any) => {
                 dispatch(fetchClubs());
             }
     }
-}
+};
+
+export const likePost = (loggedInUser: any, clubId:any, postId: any) => {
+    return async (dispatch: any, getState: any) => {
+        const token = getState().user.idToken
+        let user = loggedInUser
+        let post = postId
+        let club = clubId
+        const response = await fetch(
+            'https://cbsstudents-9a50e-default-rtdb.firebaseio.com/clubs/' + club + '/posts/' + post + '/users.json?auth=' + token, {
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                users: user
+            })
+
+        });
+        const data = await response.json();
+        //console.log(data);
+       if (!response.ok) {
+           console.log('There was a problem')
+       } else {
+           user.id = data.name;
+           dispatch({ type: PUSH_USER, payload: {user, club, post}}) // chatMessages
+           dispatch(fetchClubs())
+       }
+    }
+    
+};
+
 
 
