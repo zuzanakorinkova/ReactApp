@@ -7,27 +7,48 @@ import PostOrEventScreen from '../screens/PostOrEventScreen';
 import { DarkPurple, Purple, LightGrey } from '../assets/colors';
 import { useSelector, useDispatch } from 'react-redux';
 import {Avatar} from 'react-native-elements';
+import {likePost} from '../store/actions/ClubActions';
 
 const Posts = props => {
-
-
+    
     const clubs = useSelector(state => state.club.clubs)
     let clubName = ''
     let clubImage = ''
+    let clubId = ''
+    let userId = ''
     for(const key in clubs){
+
         for (const key1 in clubs[key].posts){
+
             if(clubs[key].posts[key1].id == props.post.id){
+                clubId = clubs[key].id
                 clubName = clubs[key].name
                 clubImage = clubs[key].image
             }
+            for (const key2 in clubs[key].posts[key1].likes){
+                userId = clubs[key].posts[key1].likes[key2].id
+
+            }
             // if this id == id of the current prop post -> display the club
         }
+    }
+    const dispatch = useDispatch()
+    const loggedInUser = useSelector(state => state.user.loggedInUser)
+
+    const handleLike = () => {
+       if(!loggedInUser.id == userId) {
+            dispatch(likePost(loggedInUser,clubId, props.post.id))
+       }else {
+           console.log('user already liked this')
+       }
+        
     }
 
 
     const timestamp = props.post.created
     let time = moment(timestamp || moment.now()).fromNow()
 
+    console.log(props.post.likes)
 
  return (
     <View style={styles.container}>
@@ -40,9 +61,9 @@ const Posts = props => {
             <Text>{props.post.content}</Text>
             <View style={styles.timeContainer}>
                 <Text style={styles.time}>{time}</Text>
-                <TouchableOpacity style={{flexDirection: 'row'}}>
-                    <Ionicons name="ios-heart-outline" size={20} color="#4f52a0"/>
-                    <Text style={styles.likes}>1</Text>
+                <TouchableOpacity style={{flexDirection: 'row'}} onPress={handleLike}>
+                    <Ionicons name={loggedInUser.id == userId ? "ios-heart" : 'ios-heart-outline' } size={20} color="#4f52a0"/>
+                    <Text style={styles.likes}>{props.post.likes.length}</Text>
                 </TouchableOpacity>
             </View> 
             <View style={styles.clubContainer}>
@@ -76,7 +97,7 @@ blogText: {
     fontWeight: 'bold',
 },
 title: {
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: 'bold',
 },
 timeContainer: {

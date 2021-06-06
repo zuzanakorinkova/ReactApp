@@ -50,7 +50,7 @@ view: {
 },
 title: {
 color: DarkPurple,
-fontSize: 18,
+fontSize: 22,
 fontWeight: 'bold',
 },
 time: {

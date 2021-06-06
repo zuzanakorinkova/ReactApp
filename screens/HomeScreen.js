@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import ChatRoom from '../components/ChatRoom';
 import Events from '../components/Events';
-import { View, Text, Button, StyleSheet, FlatList } from 'react-native';
+import Posts from '../components/Posts';
+import EventsAndPosts from '../components/EventsAndPosts';
+import { View, Text, Button, StyleSheet, ScrollView, SectionList, TouchableOpacity, Image, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { LightGrey, LightPurple, DarkPurple } from '../assets/colors';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from "../components/common/Input";
 import { signupDetails } from "../store/actions/UserActions";
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 
 const HomeScreen = props => {
@@ -16,11 +18,15 @@ const HomeScreen = props => {
 
    const clubs = []
    const events = []
+   const posts = []
    for (const key in allData){
       clubs.push(allData[key])
       for (const key1 in allData[key].events){
           events.push(allData[key].events[key1])
       }
+      for (const key2 in allData[key].posts){
+        posts.push(allData[key].posts[key2])
+    }
    }
   // console.log(clubs.id)
 
@@ -37,17 +43,11 @@ const HomeScreen = props => {
 
 
   // FETCH ALL EVENTS
+
+  // Create a flatlist with club data and new components
     return (
         <View>
-            <View>
-            <View>
-                <FlatList data={events} renderItem={itemData => (
-                    <Events event={itemData.item}></Events>
-                )}
-                keyExtractor={item => item.id} />
-            </View>
-            </View>
-            <View>
+    <View>
             <Text>----------------------</Text>
              <Input
                 label="Name"
@@ -61,12 +61,22 @@ const HomeScreen = props => {
              />
              <Button title="Add name" onPress={handleSignUp}></Button>
             </View>
+
+    <View>
+    <FlatList data={clubs} renderItem={itemData => (
+        <EventsAndPosts home={itemData.item} />
+                )}
+                keyExtractor={(item) => {
+                    return item.id;
+                  }} />
+    </View>
+        
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-
-});
+   
+     });
 
 export default HomeScreen;
