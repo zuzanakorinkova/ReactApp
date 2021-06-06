@@ -61,6 +61,8 @@ const HomeScreen = props => {
              />
              <Button title="Add name" onPress={handleSignUp}></Button>
             </View>
+
+    <View>
         <FlatList
             data={clubs}
             renderItem={(itemData) => (
@@ -70,7 +72,7 @@ const HomeScreen = props => {
             )}
 
         />
-
+    </View>
         
         </View>
     );

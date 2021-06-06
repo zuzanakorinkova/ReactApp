@@ -76,7 +76,7 @@ blogText: {
     fontWeight: 'bold',
 },
 title: {
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: 'bold',
 },
 timeContainer: {

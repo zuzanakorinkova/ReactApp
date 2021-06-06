@@ -25,7 +25,7 @@ const EventsAndPosts = props => {
             <Text style={styles.title}>{props.home.posts[key].title}</Text>
             <Text>{props.home.posts[key].content}</Text>
             <View style={styles.timeContainer}>
-                <Text style={styles.time}>{time}</Text>
+                <Text style={styles.postTime}>{time}</Text>
                 <TouchableOpacity style={{flexDirection: 'row'}}>
                     <Ionicons name="ios-heart-outline" size={20} color="#4f52a0"/>
                     <Text style={styles.likes}>1</Text>
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
      },
      title: {
      color: DarkPurple,
-     fontSize: 18,
+     fontSize: 22,
      fontWeight: 'bold',
      },
      time: {
@@ -123,6 +123,33 @@ const styles = StyleSheet.create({
         color: Purple,
         fontWeight: 'bold',
     },
+    timeContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        borderBottomWidth: 1,
+        borderColor: LightGrey,
+    },
+    clubContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 5,
+    },
+    club: {
+        fontWeight: 'bold',
+        marginLeft: 10,
+        textTransform: 'uppercase',
+    },
+    likes: {
+        paddingLeft: 2,
+        color: Purple,
+        fontWeight: 'bold',
+    },
+    postTime: {
+        paddingTop: 10,
+        color: 'grey',
+        paddingBottom: 10,
+    }
 });
 
 export default EventsAndPosts;
