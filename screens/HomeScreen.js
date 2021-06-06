@@ -63,13 +63,12 @@ const HomeScreen = props => {
             </View>
 
     <View>
-        <FlatList
-            data={clubs}
-            renderItem={(itemData) => (
-                <EventsAndPosts home={itemData.item}/>
+    <FlatList data={clubs} renderItem={itemData => (
+        <EventsAndPosts home={itemData.item} />
                 )}
-                keyExtractor={item => item.id} 
-        />
+                keyExtractor={(item) => {
+                    return item.id;
+                  }} />
     </View>
         
         </View>

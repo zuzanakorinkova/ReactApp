@@ -3,18 +3,41 @@ import { View, Text, Button, StyleSheet, TouchableOpacity, Image  } from 'react-
 import { event } from 'react-native-reanimated';
 import { LightGrey, Purple, DarkPurple } from '../assets/colors';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector, useDispatch } from 'react-redux';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import {Avatar} from 'react-native-elements';
 import moment from 'moment'; 
-import { renderNode } from 'react-native-elements/dist/helpers';
+import {likePost} from '../store/actions/ClubActions';
+
 
 const EventsAndPosts = props => {
     const navigation = useNavigation()
- 
+
+    const dispatch = useDispatch()
+    const loggedInUser = useSelector(state => state.user.loggedInUser)
+
+    const handleLike = () => {
+        if(!loggedInUser.id == likeId) {
+            console.log('like')
+             dispatch(likePost(loggedInUser,homeId, postId))
+        }else {
+            console.log('user already liked this')
+        }
+         
+     }
    let postLoop = []
+   let postId = ''
+   let likeId = ''
+   let homeId = ''
    for (const key in props.home.posts){
+       homeId = props.home.id
+    for(const key1 in props.home.posts[key].likes){
+        likeId = props.home.posts[key].likes[key1].id
+    }
+    postId = props.home.posts[key].id
     const timestamp = props.home.posts[key].created
     let time = moment(timestamp || moment.now()).fromNow()
+    
        postLoop.push(
         <View style={[styles.container,{padding: 15}]}>
         <View style={styles.blog}>
@@ -26,9 +49,9 @@ const EventsAndPosts = props => {
             <Text>{props.home.posts[key].content}</Text>
             <View style={styles.timeContainer}>
                 <Text style={styles.postTime}>{time}</Text>
-                <TouchableOpacity style={{flexDirection: 'row'}}>
-                    <Ionicons name="ios-heart-outline" size={20} color="#4f52a0"/>
-                    <Text style={styles.likes}>1</Text>
+                <TouchableOpacity onPress={handleLike} style={{flexDirection: 'row'}}>
+                    <Ionicons name={loggedInUser.id == likeId ? 'ios-heart' : "ios-heart-outline"} size={20} color="#4f52a0"/>
+                    <Text style={styles.likes}>{props.home.posts[key].likes.length}</Text>
                 </TouchableOpacity>
             </View> 
             <View style={styles.clubContainer}>
@@ -38,10 +61,8 @@ const EventsAndPosts = props => {
         </View>
         
     </View>
-       )
-
-   }
-
+       )}
+  
 
    let eventLoop = []
    for (const key in props.home.events){

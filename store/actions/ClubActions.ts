@@ -13,6 +13,7 @@ export const NEW_EVENT = 'NEW_EVENT';
 export const FETCHED_EVENTS = 'FETCH_EVENTS';
 export const PUSH_USER = 'PUSH_USER';
 export const NEW_POST = 'NEW_POST';
+export const LIKE_POST = 'LIKE_POST';
 
 export const fetchClubs = () => {
     return async (dispatch: any, getState: any) => {
@@ -39,6 +40,7 @@ export const fetchClubs = () => {
                 const loadedEvents = [];
                 const loadedPosts = [];
                 const loadedEventUsers = [];
+                const loadedLikes = [];
                 
                 for (const key2 in data[key].chatMessages) {
                     let msg = new ChatMessages(key2,data[key].chatMessages[key2].message, new Date(data[key].chatMessages[key2].created), data[key].chatMessages[key2].user);
@@ -54,8 +56,13 @@ export const fetchClubs = () => {
                     loadedEvents.push(event)
                 }
                 for (const key2 in data[key].posts) {
-                    let post = new Posts(key2, data[key].posts[key2].title, data[key].posts[key2].content, [], [], new Date(data[key].posts[key2].created))
+                    for (const key3 in data[key].posts[key2].likes){
+                        let like = new User(key3, data[key].posts[key2].likes[key3].name, data[key].posts[key2].likes[key3].email, data[key].posts[key2].likes[key3].image, data[key].posts[key2].likes[key3].title, data[key].posts[key2].likes[key3].chatNotification)
+                        loadedLikes.push(like)
+                    }
+                    let post = new Posts(key2, data[key].posts[key2].title, data[key].posts[key2].content, loadedLikes, [], new Date(data[key].posts[key2].created))
                     loadedPosts.push(post)
+                  
                 } 
 
                 clubs.push(new Clubs(key, data[key].name, data[key].image, new Date(data[key].created), loadedMessages, loadedEvents, loadedPosts))
@@ -236,18 +243,18 @@ export const createPost = (title: any, content: any, clubId: any) => {
 export const likePost = (loggedInUser: any, clubId:any, postId: any) => {
     return async (dispatch: any, getState: any) => {
         const token = getState().user.idToken
-        let user = loggedInUser
+        let like = loggedInUser
         let post = postId
         let club = clubId
         const response = await fetch(
-            'https://cbsstudents-9a50e-default-rtdb.firebaseio.com/clubs/' + club + '/posts/' + post + '/users.json?auth=' + token, {
+            'https://cbsstudents-9a50e-default-rtdb.firebaseio.com/clubs/' + club + '/posts/' + post + '/likes.json?auth=' + token, {
 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                users: user
+                likes: like
             })
 
         });
@@ -256,8 +263,8 @@ export const likePost = (loggedInUser: any, clubId:any, postId: any) => {
        if (!response.ok) {
            console.log('There was a problem')
        } else {
-           user.id = data.name;
-           dispatch({ type: PUSH_USER, payload: {user, club, post}}) // chatMessages
+           like.id = data.name;
+           dispatch({ type: LIKE_POST, payload: {like, club, post}}) 
            dispatch(fetchClubs())
        }
     }
