@@ -65,7 +65,7 @@ const HomeScreen = props => {
             data={clubs}
             renderItem={(itemData) => (
                 <EventsAndPosts home={itemData.item}
-                    keyExtractor={item => item.id} 
+                keyExtractor={item => item.id} 
                 />
             )}
 

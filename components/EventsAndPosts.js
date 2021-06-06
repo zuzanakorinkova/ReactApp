@@ -63,19 +63,15 @@ const EventsAndPosts = props => {
         </View>
        </TouchableOpacity>
     )
-
    // eventLocation = props.home.events[key].location
    }
+   const array = postLoop.concat(eventLoop)
  return (
     <View>
-        <View>
-            {eventLoop}
-        </View>
-       
 
-      <View>
-          {postLoop}
-      </View>
+       <View>
+        {array}
+       </View>
 
     </View>
  );
