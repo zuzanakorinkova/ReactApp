@@ -4,9 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { LightGrey, LightPurple, DarkPurple } from '../assets/colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import moment from 'moment';
 
 const Events = props => {
    const navigation = useNavigation()
+   let start = moment(props.event.startDate).format('MMM D • hh:mm');
+   let end = moment(props.event.endDate).format('MMM D • hh:mm');
   
  return (
     <TouchableOpacity onPress={() => navigation.navigate('Single Event', {name: props.event.title, id: props.event.id})} style={styles.container}>
@@ -15,9 +18,7 @@ const Events = props => {
             <Text style={styles.title}>{props.event.title}</Text>
             <View style={styles.containerTime}>
             <Ionicons name="ios-time" size={20} color="#4f52a0"/>
-               <Text style={styles.time}>{props.event.startDate} </Text>
-               <Text style={styles.time}>{props.event.fromTime} -</Text>
-               <Text style={styles.time}>{props.event.untilTime}</Text>
+               <Text style={styles.time}>{start} - {end}</Text>
             </View>
             <View style={styles.containerTime}>
             <Ionicons name="ios-location" size={20} color="#4f52a0"/>

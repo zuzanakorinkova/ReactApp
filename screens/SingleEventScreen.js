@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import {pushUser} from '../store/actions/ClubActions';
 import { ScrollView } from 'react-native-gesture-handler';
+import moment from 'moment';
 
 
 const SingleEventScreen = props => {
@@ -30,10 +31,8 @@ const SingleEventScreen = props => {
            for(const key1 in clubs[key].events){
                thumbnail = clubs[key].events[key1].thumbnail
                clubName = clubs[key].name
-               startDate = clubs[key].events[key1].startDate
-               endDate = clubs[key].events[key1].endDate
-               fromTime = clubs[key].events[key1].fromTime
-               untilTime = clubs[key].events[key1].untilTime
+               startDate = moment(clubs[key].events[key1].startDate).format('MMM D • hh:mm')
+               endDate = moment(clubs[key].events[key1].endDate).format('MMM D • hh:mm')
                location = clubs[key].events[key1].location
                description = clubs[key].events[key1].description
                userLength = clubs[key].events[key1].users
@@ -43,7 +42,6 @@ const SingleEventScreen = props => {
            }
        }
     }
-
     const dispatch = useDispatch()
     const loggedInUser = useSelector(state => state.user.loggedInUser)
     const handlePushUser = () => {
@@ -68,10 +66,7 @@ const SingleEventScreen = props => {
                     <Text style={styles.title}>{props.route.params.name}</Text>
                     <View style={styles.containerTime}>
                         <Ionicons style={styles.icon} name="ios-time" size={15} color={DarkGrey}/>
-                        <Text style={styles.time}>{startDate} ⋅ </Text>
-                        <Text style={styles.time}>{fromTime} - </Text>
-                        <Text style={styles.time}>{endDate} ⋅ </Text>
-                        <Text style={styles.time}>{untilTime}</Text>
+                        <Text style={styles.time}>{startDate} - {endDate}</Text>
                     </View>
                     <View style={styles.containerTime}>
                         <Ionicons style={styles.icon} name="ios-location" size={15} color={DarkGrey}/>
