@@ -52,7 +52,7 @@ export const fetchClubs = () => {
                         let user = new User(key3, data[key].events[key2].users[key3].name, data[key].events[key2].users[key3].email, data[key].events[key2].users[key3].image, data[key].events[key2].users[key3].title, data[key].events[key2].users[key3].chatNotification)
                         loadedEventUsers.push(user)
                     }
-                    let event = new Events(key2, data[key].events[key2].title, data[key].events[key2].description, data[key].events[key2].startDate, data[key].events[key2].endDate, data[key].events[key2].fromTime, data[key].events[key2].untilTime, data[key].events[key2].location, loadedEventUsers, data[key].events[key2].thumbnail)
+                    let event = new Events(key2, data[key].events[key2].title, data[key].events[key2].description, data[key].events[key2].startDate, data[key].events[key2].endDate, data[key].events[key2].location, loadedEventUsers, data[key].events[key2].thumbnail)
                     loadedEvents.push(event)
                 }
                 for (const key2 in data[key].posts) {
@@ -142,11 +142,11 @@ export const createChatMessage = (message: any, clubId: any) => {
 };
 
 
-export const createEvent = (title: any, description: any, startDate: any, endDate: any, fromTime: any, untilTime: any, location: any, thumbnail: any, clubId: any) => {
+export const createEvent = (title: any, description: any, startDate: any, endDate: any, location: any, thumbnail: any, clubId: any) => {
     return async (dispatch: any, getState: any) => {
         const token = getState().user.idToken
 
-        let event = new Events('', title, description, startDate, endDate, fromTime, untilTime, location, [], thumbnail);
+        let event = new Events('', title, description, startDate, endDate, location, [], thumbnail);
         let club = clubId;
 
         const response = await fetch(
@@ -161,8 +161,6 @@ export const createEvent = (title: any, description: any, startDate: any, endDat
                 description: event.description,
                 startDate: event.startDate,
                 endDate: event.endDate,
-                fromTime: event.fromTime,
-                untilTime: event.untilTime,
                 location: event.location,
                 thumbnail: event.thumbnail
             })
