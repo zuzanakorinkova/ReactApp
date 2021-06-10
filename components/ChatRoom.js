@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet,TouchableOpacity} from 'react-native';
+import { View, Text, Button, StyleSheet,TouchableOpacity, Image} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {Avatar} from 'react-native-elements';
+import moment from 'moment';
 
 const ChatRoom = props => {
     // chatroom = club name
@@ -14,12 +15,13 @@ const ChatRoom = props => {
         lastMessage = props.chatroom.chatMessages[props.chatroom.chatMessages.length - 1].message;
         const lastTime = props.chatroom.chatMessages[props.chatroom.chatMessages.length - 1].created;
 
-        displayTime = lastTime.getHours() + ":" + lastTime.getMinutes()
+        displayTime = moment(lastTime).format('hh:mm')
     }
+
     return (
         <TouchableOpacity onPress={() => navigation.navigate("ChatMessages", {id: props.chatroom.id})} style={styles.chatContainer}>
             <View style={styles.club}>
-                <Avatar rounded source={{uri:props.chatroom.image}} />   
+                <Avatar rounded source={{uri: props.chatroom.image}} />   
                 <View>
                     <Text style={styles.chatTitle}>{props.chatroom.name}</Text>
                     <Text style={styles.message} ellipsizeMode='tail' numberOfLines={1}>{lastMessage}</Text>

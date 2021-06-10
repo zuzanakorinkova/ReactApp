@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {DarkPurple} from '../../assets/colors';
 import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
 
 
@@ -15,7 +16,7 @@ const Input = (props) => {
 
     return (
         <View>
-            <Text>{props.label}</Text>
+            <Text style={styles.label}>{props.label}</Text>
             <TextInput
                 style={styles.input}
                 value={props.text}
@@ -29,6 +30,9 @@ const Input = (props) => {
 }//{!nameValid && <Text>{props.error}</Text>}
 
 const styles = StyleSheet.create({
+    label: {
+        color: DarkPurple,
+    },
     input: {
         padding: 10,
     }

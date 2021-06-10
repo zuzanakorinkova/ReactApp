@@ -5,10 +5,9 @@ import Input from '../components/common/Input';
 import { View, Text, Button, StyleSheet, Platform, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
-import Constant from 'expo-constants';
+import {Picker} from '@react-native-picker/picker';
 
-
-const NewClub = props => {
+const CreateClubScreen = props => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const [clubName, setClubName] = useState('')
@@ -40,6 +39,15 @@ const NewClub = props => {
         <View>
             <Text>Create New club</Text>
             <View>
+            {/* <Picker
+                selectedValue={image}
+                onValueChange={(itemValue, itemIndex) =>
+                    setImage(itemValue)
+                }>
+                <Picker.Item label="CBS" value="1.png" />
+                <Picker.Item label="Chatty" value="2.png" />
+                <Picker.Item label="Club" value="3.png" />
+            </Picker> */}
             <Button title="Choose Image" onPress={pickImage} />
               {image && <Image source={{uri:image}} style={styles.pickImage} />}
                 <Input
@@ -61,4 +69,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default NewClub;
+export default CreateClubScreen;

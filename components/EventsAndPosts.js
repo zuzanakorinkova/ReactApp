@@ -39,7 +39,10 @@ const EventsAndPosts = props => {
     let time = moment(timestamp || moment.now()).fromNow()
     
        postLoop.push(
-        <View style={[styles.container,{padding: 15}]}>
+        <TouchableOpacity style={[styles.container,{padding: 15}]} 
+        onPress={() => navigation.navigate('Single Post', 
+        {name: props.home.posts[key].title, id: props.home.posts[key].id})}>
+            
         <View style={styles.blog}>
             <Ionicons name="ios-newspaper" size={20} color="#4f52a0"/>
             <Text style={styles.blogText}>Blog</Text>
@@ -60,7 +63,7 @@ const EventsAndPosts = props => {
             </View>
         </View>
         
-    </View>
+    </TouchableOpacity>
        )}
   
    let eventLoop = []
