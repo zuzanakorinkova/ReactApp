@@ -10,34 +10,37 @@ import {
 } from "react-native";
 import { DarkPurple, LightGrey, LightPurple, Purple } from "../assets/colors";
 import { useDispatch } from "react-redux";
-import { NavigationHelpersContext, useNavigation } from "@react-navigation/native";
+import {
+	NavigationHelpersContext,
+	useNavigation,
+} from "@react-navigation/native";
 import Input from "../components/common/Input";
 import { signup } from "../store/actions/UserActions";
-import { signupDetails } from "../store/actions/UserActions";
-
+import { log } from "react-native-reanimated";
 
 const SignUpScreen = (props: any) => {
 
 	const navigation = useNavigation();
 	const dispatch = useDispatch();
-	const [title, setTitle] = useState("");
-	const [titleValid, setTitleValid] = useState("");
-	const [name, setName] = useState("");
-	const [nameValid, setNameValid] = useState("");
 	const [email, setEmail] = useState("");
 	const [emailValid, setEmailValid] = useState(false);
 	const [password, setPassword] = useState("");
 	const [passwordValid, setPasswordValid] = useState(false);
 	const [confirmPassword, setConfirmPassword] = useState('')
 	const [confirmPasswordValid, setConfirmPasswordValid] = useState(false);
+	const [signupError, setSignupError] = useState(false);
 
 	const handleSignUp = () => {
-		//console.log('signing up')
-		if(password != confirmPassword){
-			console.log('passwords dont match')
-		}else {
-			dispatch(signup(email, password));
-			dispatch(signupDetails(name));
+		if (email && password) {
+			if (password == confirmPassword) {
+				dispatch(signup(email, password));
+				navigation.navigate("Signup Details");
+			}else {
+				console.log('passwords dont match')
+			}
+		} else {
+			console.log("Error, signup not valid!");
+			setSignupError(true);
 		}
 	};
 
@@ -67,19 +70,6 @@ const SignUpScreen = (props: any) => {
 						error="Please fill out your password"
 						placeholder="Write your password"
 					/>
-					{/* <Input
-						label="Name"
-						text={name}
-						setContent={(content) => setName(content)}
-						textValid={nameValid}
-						onValid={(valid) => setNameValid(valid)}
-						error="Please fill out your name"
-						placeholder="Write your name"
-						secureTextEntry={true}
-					/> */}
-
-					{/* <Input label="Confirm password" newName={newName} nameValid={nameValid} handleNewInput={handleNewInput}
-                    error="Passwords dont match" placeholder="Confirm your password" secureTextEntry={true} /> */}
 					<Input
 						label="Confirm password"
 						text={confirmPassword}
@@ -90,10 +80,22 @@ const SignUpScreen = (props: any) => {
 						placeholder="Confirm password"
 					/>
 					<Text style={ password == confirmPassword ? {display: 'none'} : {display: 'flex'}}>Passwords don't match</Text>
+
 				</View>
-				<Pressable style={styles.button} onPress={handleSignUp}><Text style={styles.buttonText}>Sign up</Text></Pressable>
-				<TouchableOpacity style={styles.login} onPress={() => navigation.navigate("Signin")}>
-					<Text style={styles.loginText}>Already have an account? <Text style={{fontWeight: 'bold'}}>Login</Text></Text>
+				<Pressable style={styles.button} onPress={handleSignUp}>
+					<Text style={styles.buttonText}>Sign up</Text>
+				</Pressable>
+				{signupError && (
+					<Text style={styles.error}>Error, signup is not valid</Text>
+				)}
+				<TouchableOpacity
+					style={styles.login}
+					onPress={() => navigation.navigate("Signin")}
+				>
+					<Text style={styles.loginText}>
+						Already have an account?{" "}
+						<Text style={{ fontWeight: "bold" }}>Login</Text>
+					</Text>
 				</TouchableOpacity>
 			</View>
 		</View>
@@ -123,13 +125,10 @@ const styles = StyleSheet.create({
 	inputContainer: {
 		marginBottom: 20,
 		borderRadius: 5,
-		elevation:5,
-		shadowColor: '#000',
+		elevation: 5,
+		shadowColor: "#000",
 		shadowOpacity: 0.2,
-		backgroundColor: 'white',
-		shadowRadius: 5, 
-		borderWidth: 1,
-		borderColor: LightGrey,
+		shadowRadius: 5,
 		padding: 10,
 	},
 	button: {
@@ -139,18 +138,22 @@ const styles = StyleSheet.create({
 		borderRadius: 5,
 	},
 	buttonText: {
-		color: 'white',
+		color: "white",
 		fontSize: 17,
-		fontWeight: 'bold',
+		fontWeight: "bold",
 	},
 	login: {
 		marginTop: 50,
-		alignSelf: 'center',
+		alignSelf: "center",
 	},
 	loginText: {
 		color: DarkPurple,
-	}
-
+	},
+	error: {
+		color: "#333333",
+		fontSize: 12,
+		marginVertical: 8,
+	},
 });
 
 export default SignUpScreen;

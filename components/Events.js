@@ -1,10 +1,17 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
-import { LightGrey, LightPurple, DarkPurple } from '../assets/colors';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import moment from 'moment';
+import React from "react";
+import {
+	View,
+	Text,
+	Button,
+	StyleSheet,
+	TouchableOpacity,
+	Image,
+} from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { LightGrey, LightPurple, DarkPurple } from "../assets/colors";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import moment from "moment";
 
 const Events = props => {
    const navigation = useNavigation()
@@ -29,43 +36,43 @@ const Events = props => {
  );
 }
 
+
 const styles = StyleSheet.create({
-container: {
-   margin: 20,
-   backgroundColor: 'white',
-   borderRadius:10,
-   elevation:10,
-   shadowColor: '#000',
-   shadowOpacity: 0.2,
-   shadowRadius: 5, 
-},
-image: {
-width: "100%",
-height: 70,
-borderTopRightRadius: 10,
-borderTopLeftRadius: 10,
-},
-view: {
-   padding: 20,
-  
-},
-title: {
-color: DarkPurple,
-fontSize: 22,
-fontWeight: 'bold',
-},
-time: {
-   marginLeft: 10,
-   color: 'grey',
-},
-location: {
-   marginLeft: 10,
-   color: 'black',
-},
-containerTime: {
-    flexDirection: 'row',
-    padding: 2,
- },
+	container: {
+		margin: 20,
+		backgroundColor: "white",
+		borderRadius: 10,
+		elevation: 10,
+		shadowColor: "#000",
+		shadowOpacity: 0.2,
+		shadowRadius: 5,
+	},
+	image: {
+		width: "100%",
+		height: 70,
+		borderTopRightRadius: 10,
+		borderTopLeftRadius: 10,
+	},
+	view: {
+		padding: 20,
+	},
+	title: {
+		color: DarkPurple,
+		fontSize: 22,
+		fontWeight: "bold",
+	},
+	time: {
+		marginLeft: 10,
+		color: "grey",
+	},
+	location: {
+		marginLeft: 10,
+		color: "black",
+	},
+	containerTime: {
+		flexDirection: "row",
+		padding: 2,
+	},
 });
 
 export default Events;

@@ -13,8 +13,10 @@ export const NEW_EVENT = 'NEW_EVENT';
 export const USER_GOING = 'USER_GOING';
 export const NEW_POST = 'NEW_POST';
 export const LIKE_POST = 'LIKE_POST';
+
 export const USER_NOT_GOING = 'USER_NOT_GOING';
 export const READ_MESSAGE = 'READ_MESSAGE';
+export const RESET_STORE = 'RESET_STORE'
 
 export const fetchClubs = () => {
     return async (dispatch: any, getState: any) => {
@@ -297,6 +299,7 @@ export const likePost = (loggedInUser: any, clubId:any, postId: any) => {
     
 };
 
+
 export const userNotGoing = (userId: any, clubId: any, eventId: any) => {
     return async (dispatch: any, getState: any) => {
         const token = getState().user.idToken
@@ -323,3 +326,8 @@ export const userNotGoing = (userId: any, clubId: any, eventId: any) => {
         }
     }
 }
+
+export const logout = () => {
+    return {type: RESET_STORE, payload: "" };
+}
+
