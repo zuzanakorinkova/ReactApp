@@ -227,10 +227,6 @@ const HomeTabNavigator = (props) => {
                 component={ProfileStackNavigator}
             />
       			
-			<Tab.Screen name={"Home"} component={HomeStackNavigator} />
-			<Tab.Screen name={"Discover"} component={DiscoverStackNavigator} />
-			<Tab.Screen name={"Chat"} component={ChatStackNavigator} />
-			<Tab.Screen name={"Profile"} component={ProfileStackNavigator} />
 		</Tab.Navigator>
 	);
 };

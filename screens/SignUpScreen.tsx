@@ -7,6 +7,7 @@ import {
 	Image,
 	TouchableOpacity,
 	Pressable,
+	ScrollView
 } from "react-native";
 import { DarkPurple, LightGrey, LightPurple, Purple } from "../assets/colors";
 import { useDispatch } from "react-redux";
@@ -46,6 +47,7 @@ const SignUpScreen = (props: any) => {
 
 	return (
 		<View style={styles.container}>
+			<ScrollView>
 			<View>
 				<Image style={styles.logo} source={require("../assets/logo.png")} />
 				<Text style={styles.heading}>Signup to get access</Text>
@@ -98,13 +100,13 @@ const SignUpScreen = (props: any) => {
 					</Text>
 				</TouchableOpacity>
 			</View>
+			</ScrollView>
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: "white",
 		padding: 20,
 	},
 	logo: {
@@ -125,10 +127,6 @@ const styles = StyleSheet.create({
 	inputContainer: {
 		marginBottom: 20,
 		borderRadius: 5,
-		elevation: 5,
-		shadowColor: "#000",
-		shadowOpacity: 0.2,
-		shadowRadius: 5,
 		padding: 10,
 	},
 	button: {

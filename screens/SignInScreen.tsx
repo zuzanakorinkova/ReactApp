@@ -106,11 +106,6 @@ const styles = StyleSheet.create({
 	inputContainer: {
 		marginBottom: 20,
 		borderRadius: 5,
-		elevation: 5,
-		shadowColor: "#000",
-		shadowOpacity: 0.2,
-		shadowRadius: 5,
-		padding: 10,
 	},
 	button: {
 		marginTop: 30,
