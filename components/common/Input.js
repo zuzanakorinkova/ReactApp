@@ -23,7 +23,7 @@ const Input = (props) => {
                 placeholder={props.placeholder}
                 onChangeText={handleNewInput}
                 onBlur={() => setTouched(true)}
-                secureTextEntry={props.label == 'Password' ? true : false}
+                secureTextEntry={props.label == 'Password' || props.label == 'Confirm password' ? true : false}
             />{!props.textValid && touched && <Text>{props.error}</Text>}
         </View>
     );

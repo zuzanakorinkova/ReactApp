@@ -12,7 +12,7 @@ import {likePost} from '../store/actions/ClubActions';
 
 const EventsAndPosts = props => {
     const navigation = useNavigation()
-
+ 
     const dispatch = useDispatch()
     const loggedInUser = useSelector(state => state.user.loggedInUser)
 
@@ -69,8 +69,8 @@ const EventsAndPosts = props => {
    let eventLoop = []
    for (const key in props.home.events){
 
-    let start = moment(props.home.events[key].startDate).format('MMM D • hh:mm');
-    let end = moment(props.home.events[key].endDate).format('MMM D • hh:mm');
+    let start = moment(props.home.events[key].startDate).format('MMM D • LT');
+    let end = moment(props.home.events[key].endDate).format('MMM D • LT');
     eventLoop.push(
         <TouchableOpacity onPress={() => navigation.navigate('Single Event', {name: props.home.events[key].title, id: props.home.events[key].id})} style={styles.container}>
         <Image style={styles.image} source={{uri:props.home.events[key].thumbnail}} />

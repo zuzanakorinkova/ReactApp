@@ -1,4 +1,4 @@
-import { NEW_CHATMESSAGE, FETCHED_CLUBS, NEW_EVENT, FETCHED_EVENTS, PUSH_USER, NEW_POST, LIKE_POST } from '../actions/ClubActions';
+import { NEW_CHATMESSAGE, FETCHED_CLUBS, NEW_EVENT, USER_GOING, NEW_POST, LIKE_POST, USER_NOT_GOING, READ_MESSAGE } from '../actions/ClubActions';
 import Clubs from '../../models/Clubs';
 import Events from '../../models/Events';
 import User from '../../models/User'
@@ -6,7 +6,6 @@ import ChatMessages from '../../models/ChatMessages';
 import Posts from '../../models/Posts';
 import {Action} from './UserReducers';
 import { tassign } from 'tassign';
-//import {tassign} from 'tassign';
 
 export interface ClubState {
     clubs: Clubs[];
@@ -37,12 +36,16 @@ const ClubReducer = (state = initialState, action: Action) => {
             newClub.chatMessages = message;
 
             const index: number = state.clubs.findIndex(room => room.id === action.payload.club)
-           const chatroomArray: Clubs[] = [...state.clubs];
+            const chatroomArray: Clubs[] = [...state.clubs];
             return tassign(state, {clubs: chatroomArray});
             
-        case FETCHED_EVENTS:
-            return tassign(state, {events: action.payload});
-            
+        case READ_MESSAGE:
+            // const messageId = clubId.chatMessages.find(message => message.id === action.payload.chatMessage) as ChatMessages
+
+            // const newMessage: ChatMessages = {...messageId}
+
+            return tassign(state, {clubs: action.payload})
+     
         case NEW_EVENT:
             const event: Events[] = [...clubId.events, action.payload.event]
 
@@ -52,7 +55,7 @@ const ClubReducer = (state = initialState, action: Action) => {
             const clubArray: Clubs[] = [...state.clubs];
             return tassign(state, {clubs: clubArray});    
 
-        case PUSH_USER:
+        case USER_GOING:
             const eventId = clubId.events.find(e => e.id === action.payload.event) as Events
 
             const users: User[] = [...eventId.users, action.payload.users]
@@ -66,7 +69,6 @@ const ClubReducer = (state = initialState, action: Action) => {
 
             newClub.posts = post;
 
-            const club: number = state.clubs.findIndex(room => room.id === action.payload.club)
             const newArray: Clubs[] = [...state.clubs];
             return tassign(state, {clubs: newArray});   
 
@@ -79,6 +81,14 @@ const ClubReducer = (state = initialState, action: Action) => {
             newPost.likes = likes
             const newPostArray: Posts[] = [...state.posts]
             return tassign(state, {posts: newPostArray});
+        
+        case USER_NOT_GOING:
+            const eventInfo = clubId.events.find(e => e.id === action.payload.event) as Events
+            const userIndex = eventInfo.users.findIndex(s => s.id === action.payload.user)
+
+            eventInfo.users.splice(userIndex, 1)
+            const eventArrayCopy: Events[] = [...state.events]
+            return tassign(state, {events: eventArrayCopy});
 
         default:
             return state

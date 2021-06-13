@@ -16,7 +16,7 @@ const CreateEventScreen = props => {
     const navigatiion = useNavigation()
     const dispatch = useDispatch();
 
-    const [startDate, setStartDate] = useState(new Date());// new Date(1598051730000)
+    const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     
     const [showStart, setShowStart] = useState(false);
@@ -24,22 +24,22 @@ const CreateEventScreen = props => {
     const [showEnd, setShowEnd] = useState(false);
     const [modeEnd, setModeEnd] = useState('date');
 
-    const onChangeStart = (event, selectedDate) => {
+    const onChangeStart = (selectedDate) => {
         const currentDate = selectedDate || startDate;
         setShowStart(Platform.OS === 'ios');
         setStartDate(currentDate);
     };
-    const onChangeEnd = (event, selectedDate) => {
+    const onChangeEnd = (selectedDate) => {
         const currentDate = selectedDate || endDate;
         setShowEnd(Platform.OS === 'ios');
         setEndDate(currentDate);
     };
 
     let displayStartDate = moment(startDate).format('MMM D YYYY');
-    let displayStartTime = moment(startDate).format('hh:mm')
+    let displayStartTime = moment(startDate).format('LT')
 
     let displayEndDate = moment(endDate).format('MMM D YYYY');
-    let displayEndTime = moment(endDate).format('hh:mm')
+    let displayEndTime = moment(endDate).format('LT')
 
     const showStartMode = (currentMode) => {
         setShowStart(true);
@@ -85,7 +85,7 @@ const CreateEventScreen = props => {
           if (Platform.OS !== 'web') {
             const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
             if (status !== 'granted') {
-              alert('Sorry, we need camera roll permissions to make this work!');
+              console.log('Sorry, we need camera roll permissions to make this work!');
             }
           }
         })();
@@ -98,17 +98,13 @@ const CreateEventScreen = props => {
         aspect: [4, 3],
         quality: 1,
     });
-    console.log(result);
 
     if (!result.cancelled) {
       setImage(result.uri)
     }
   };
 
-
-
     const handleSave = () => {
-        //dispatch(createEvent(title, description, startDate, endDate, fromTime, untilTime, location, image, id))
         dispatch(createEvent(title, description, startDate, endDate, location, image, id))
         navigatiion.navigate('Home')
     }
@@ -122,7 +118,6 @@ const CreateEventScreen = props => {
               {image && <Image source={{uri:image}} style={styles.pickImage} />}
             <View style={styles.fields}>
             <Input
-                style={styles.inputField}
                 label="Event title"
                 error="Please fill out the event title"
                 text={title}
@@ -131,7 +126,6 @@ const CreateEventScreen = props => {
                 setContent={content => setTitle(content)}
                     />
              <Input
-                style={styles.inputField}
                 label="Event description"
                 error="Please fill out the event description"
                 text={description}
@@ -187,14 +181,9 @@ const CreateEventScreen = props => {
                 <View style={styles.pickDate}>
                     <Text>{displayEndDate}</Text> 
                     <Text>{displayEndTime}</Text> 
-                </View>
-               
-               
-
-               
+                </View>        
 
             <Input
-                    style={styles.inputField}
                     label="Event location"
                     error="Please fill out the event location"
                     text={location}

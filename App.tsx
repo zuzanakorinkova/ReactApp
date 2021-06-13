@@ -16,12 +16,12 @@ const rootReducer = combineReducers({
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
 
-const App = props => {
+const App = (props: any) => {
 
 
   return (
     <Provider store={store}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar />
       <Router />
     </Provider>
   );

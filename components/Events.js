@@ -8,8 +8,8 @@ import moment from 'moment';
 
 const Events = props => {
    const navigation = useNavigation()
-   let start = moment(props.event.startDate).format('MMM D • hh:mm');
-   let end = moment(props.event.endDate).format('MMM D • hh:mm');
+   let start = moment(props.event.startDate).format('MMM D • LT');
+   let end = moment(props.event.endDate).format('MMM D • LT');
   
  return (
     <TouchableOpacity onPress={() => navigation.navigate('Single Event', {name: props.event.title, id: props.event.id})} style={styles.container}>

@@ -4,11 +4,13 @@ class ChatMessages {
     id: string;
     message: string;
     created: Date;
+    isNew: boolean;
     user: User;
     
-    constructor(id: string, message: string, created: Date, user: User) {
+    constructor(id: string, message: string,isNew: boolean, created: Date, user: User) {
         this.id = id;
         this.message = message;
+        this.isNew = isNew;
         this.created = created;
         this.user = user;
     }

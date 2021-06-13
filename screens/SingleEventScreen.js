@@ -6,7 +6,7 @@ import { Button } from 'react-native-elements';
 import Clubs from '../components/Clubs';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import {pushUser} from '../store/actions/ClubActions';
+import {userGoing, userNotGoing} from '../store/actions/ClubActions';
 import { ScrollView } from 'react-native-gesture-handler';
 import {Avatar} from 'react-native-elements';
 import moment from 'moment';
@@ -32,8 +32,8 @@ const SingleEventScreen = props => {
                thumbnail = clubs[key].events[key1].thumbnail
                clubName = clubs[key].name
                clubAvatar = clubs[key].image
-               startDate = moment(clubs[key].events[key1].startDate).format('MMM DD • hh:mm')
-               endDate = moment(clubs[key].events[key1].endDate).format('MMM DD • hh:mm')
+               startDate = moment(clubs[key].events[key1].startDate).format('MMM DD • LT')
+               endDate = moment(clubs[key].events[key1].endDate).format('MMM DD • LT')
                location = clubs[key].events[key1].location
                description = clubs[key].events[key1].description
                userLength = clubs[key].events[key1].users
@@ -46,9 +46,16 @@ const SingleEventScreen = props => {
     const dispatch = useDispatch()
     const loggedInUser = useSelector(state => state.user.loggedInUser)
 
-    const handlePushUser = () => {
-            dispatch(pushUser(loggedInUser,clubId, id))
+    const handleUserGoing = () => {
+       // if (loggedInUser.id == userId){
+            dispatch(userGoing(loggedInUser, clubId, id))
+       // }
+      
         
+    }
+
+    const handleNotGoing = () => {
+        dispatch(userNotGoing(loggedInUser, clubId, id))
     }
     
 
@@ -79,9 +86,11 @@ const SingleEventScreen = props => {
                     </View>
                     <View style={styles.containerUser}>
                         <Text style={styles.goingText}>Going ⋅ {userLength.length}</Text>
-                        <TouchableOpacity disabled={loggedInUser.id == userId ? true : false} style={loggedInUser.id == userId ? styles.btnPress : styles.button} onPress={handlePushUser}><Ionicons style={loggedInUser.id == userId ? styles.goingPress : styles.goingIcon} name="ios-checkbox-outline" size={20}/><Text style={loggedInUser.id == userId ? styles.btnPressText : styles.buttonText}>Going</Text></TouchableOpacity>
+                        <TouchableOpacity disabled={loggedInUser.id == userId ? true : false} style={!loggedInUser.id == userId ? styles.button : styles.btnPress} onPress={handleUserGoing}><Ionicons style={!loggedInUser.id == userId ? styles.goingIcon : styles.goingPress} name="ios-checkbox-outline" size={20}/><Text style={!loggedInUser.id == userId ? styles.buttonText : styles.btnPressText}>Going</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={handleNotGoing} style={!loggedInUser.id == userId ? {display: 'none'} : {display: 'flex'}} ><Ionicons style={styles.chatIcon} name={'ios-close-outline'} size={20} color={'white'} /></TouchableOpacity>
                     </View>
                 </View>
+
                 <View style={styles.containerAbout}>
                     <Text style={styles.about}>About</Text>
                     <Text>{description}</Text>

@@ -13,7 +13,7 @@ const ChatMessages = props => {
     const loggedInUserId = useSelector(state => state.user.loggedInUser.id)
     
 
-    const displayTime = moment(props.chatmessage.created).format('hh:mm')
+    const displayTime = moment(props.chatmessage.created).format('LT')
 
     const userIdOfMessage = props.chatmessage.user.loggedInUser.id;
     //console.log(userIdOfMessage)

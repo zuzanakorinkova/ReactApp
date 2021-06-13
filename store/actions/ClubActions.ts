@@ -10,10 +10,11 @@ export const NEW_CLUB = 'NEW_CLUB';
 export const FETCHED_CLUBS = 'FETCHED_CLUBS';
 
 export const NEW_EVENT = 'NEW_EVENT';
-export const FETCHED_EVENTS = 'FETCH_EVENTS';
-export const PUSH_USER = 'PUSH_USER';
+export const USER_GOING = 'USER_GOING';
 export const NEW_POST = 'NEW_POST';
 export const LIKE_POST = 'LIKE_POST';
+export const USER_NOT_GOING = 'USER_NOT_GOING';
+export const READ_MESSAGE = 'READ_MESSAGE';
 
 export const fetchClubs = () => {
     return async (dispatch: any, getState: any) => {
@@ -43,7 +44,7 @@ export const fetchClubs = () => {
                 const loadedLikes = [];
                 
                 for (const key2 in data[key].chatMessages) {
-                    let msg = new ChatMessages(key2,data[key].chatMessages[key2].message, new Date(data[key].chatMessages[key2].created), data[key].chatMessages[key2].user);
+                    let msg = new ChatMessages(key2,data[key].chatMessages[key2].message, data[key].chatMessages[key2].isNew, new Date(data[key].chatMessages[key2].created), data[key].chatMessages[key2].user);
  
                     loadedMessages.push(msg);
                     }
@@ -104,15 +105,14 @@ export const createClub = (clubName: any, image: any) => {
         }
 
     }
-};
+}
 
 export const createChatMessage = (message: any, clubId: any) => {
     return async (dispatch: any, getState: any) => {
         const token = getState().user.idToken
         const user = getState().user
-         console.log(user)
 
-        let chatMessages = new ChatMessages('', message, new Date(), user);
+        let chatMessages = new ChatMessages('', message, true, new Date(), user);
         let club = clubId;
 
         const response = await fetch(
@@ -126,6 +126,7 @@ export const createChatMessage = (message: any, clubId: any) => {
                 message: chatMessages.message,
                 created: chatMessages.created,
                 user: chatMessages.user,
+                isNew: chatMessages.isNew,
             })
 
         });
@@ -140,6 +141,33 @@ export const createChatMessage = (message: any, clubId: any) => {
         }
     }
 };
+
+export const readMessage = (clubId:any, chatMessageId: any, chatMessages: any) => {
+    return async (dispatch: any, getState: any) => {
+        const token = getState().user.idToken
+        let club = clubId
+        let chatMessage = chatMessageId
+
+        const response = await fetch(
+            'https://cbsstudents-9a50e-default-rtdb.firebaseio.com/clubs/' + club + '/chatMessages/' + chatMessage + '.json?auth=' + token, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+
+                })
+        });
+        const data = await response.json();
+        // console.log(data);
+        if (!response.ok) {
+            console.log('There was a problem')
+        } else {
+            dispatch({ type: READ_MESSAGE, payload: {club, chatMessage, chatMessages}}) 
+            dispatch(fetchClubs());
+        }
+    }
+}
 
 
 export const createEvent = (title: any, description: any, startDate: any, endDate: any, location: any, thumbnail: any, clubId: any) => {
@@ -178,7 +206,7 @@ export const createEvent = (title: any, description: any, startDate: any, endDat
     }
 };
 
-export const pushUser = (loggedInUser: any, clubId:any, eventId: any) => {
+export const userGoing = (loggedInUser: any, clubId:any, eventId: any) => {
     return async (dispatch: any, getState: any) => {
         const token = getState().user.idToken
         let user = loggedInUser
@@ -202,7 +230,7 @@ export const pushUser = (loggedInUser: any, clubId:any, eventId: any) => {
            console.log('There was a problem')
        } else {
            user.id = data.name;
-           dispatch({ type: PUSH_USER, payload: {user, club, event}}) // chatMessages
+           dispatch({ type: USER_GOING, payload: {user, club, event}}) // chatMessages
            dispatch(fetchClubs())
        }
     }
@@ -269,5 +297,29 @@ export const likePost = (loggedInUser: any, clubId:any, postId: any) => {
     
 };
 
+export const userNotGoing = (userId: any, clubId: any, eventId: any) => {
+    return async (dispatch: any, getState: any) => {
+        const token = getState().user.idToken
+        let user = userId
+        let event = eventId
+        let club = clubId
+        const response = await fetch(
+            'https://cbsstudents-9a50e-default-rtdb.firebaseio.com/clubs/' + club + '/events/' + event + '/users/' + user + '.json?auth=' + token, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    user: userId 
+                })   
+        });
+        const data = await response.json();
 
-
+        if (!response.ok) {
+            console.log('There was a problem')
+        } else {
+            dispatch({ type: USER_NOT_GOING, payload: {user, club, event}}) 
+            dispatch(fetchClubs())
+        }
+    }
+}

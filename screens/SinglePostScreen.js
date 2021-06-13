@@ -62,7 +62,7 @@ const SinglePostScreen = props => {
             <Text style={styles.content}>{content}</Text>
             <View style={styles.likeContainer}>
                 <Text style={styles.likes}>{likes.length} liked this</Text>
-                <TouchableOpacity disabled={loggedInUser.id == userId ? true : false} style={!loggedInUser.id == userId ? styles.likeButton : styles.pressLikeButton} onPress={handleLike}>
+                <TouchableOpacity disabled={!loggedInUser.id == userId ? false : true} style={!loggedInUser.id == userId ? styles.likeButton : styles.pressLikeButton} onPress={handleLike}>
                     <Ionicons  name={'ios-heart'} size={25} color={!loggedInUser.id == userId ? Purple : 'white'} />
                     <Text style={!loggedInUser.id == userId ? styles.likeText : styles.likedText}>{likeText}</Text>
                 </TouchableOpacity>

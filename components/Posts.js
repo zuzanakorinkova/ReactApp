@@ -42,7 +42,6 @@ const Posts = props => {
         
     }
 
-
     const timestamp = props.post.created
     let time = moment(timestamp || moment.now()).fromNow()
 
