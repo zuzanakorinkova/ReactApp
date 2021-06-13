@@ -144,6 +144,16 @@ function HomeStackNavigator() {
 					cardStyle: { backgroundColor: "#f2f2f2" },
 				})}
 			/>
+			<Stack.Screen
+				name="Single Post"
+				component={SinglePostScreen}
+				options={({ route }) => ({
+					title: route.params.name,
+					headerTintColor: "#4f52a0",
+					headerTitleStyle: { textTransform: "uppercase" },
+					cardStyle: { backgroundColor: "#f2f2f2" },
+				})}
+			/>
 		</Stack.Navigator>
 	);
 

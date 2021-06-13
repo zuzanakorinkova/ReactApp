@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Button, StyleSheet, Image, Pressable } from "react-native";
+import { View, Text, Button, StyleSheet, Image, Pressable, ScrollView } from "react-native";
 import { DarkPurple, Pink, Purple } from "../assets/colors";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../components/common/Input";
@@ -23,6 +23,7 @@ const SignUpDetailsScreen = () => {
 
 	return (
 		<View style={styles.container}>
+			<ScrollView>
 			<View style={styles.logoHolder}>
 				<Image style={styles.logo} source={require("../assets/images/3.png")} />
 			</View>
@@ -63,6 +64,7 @@ const SignUpDetailsScreen = () => {
 			<Pressable style={styles.btnSave} onPress={handleSave}>
 				<Text style={styles.btnText}>Save details</Text>
 			</Pressable>
+			</ScrollView>
 		</View>
 	);
 };
