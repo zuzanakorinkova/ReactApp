@@ -3,18 +3,19 @@ import { View, Text, StyleSheet, Image, Pressable, Switch } from "react-native";
 import { DarkPurple, Pink, Purple } from "../assets/colors";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { logout } from "../store/actions/UserActions";
+import { logoutUser } from "../store/actions/UserActions";
+import { logoutClub } from "../store/actions/ClubActions";
 import NotificationToggle from "../components/NotificationToggle";
 
 const ProfileScreen = (props) => {
 	const navigation = useNavigation();
 	const dispatch = useDispatch();
 	const userInfo = useSelector((state) => state.user.loggedInUser);
-	console.log("NEW Profile name: " + userInfo);
 
-	const logoutUser = () => {
+	const logoutUserInfo = () => {
 		console.log("Log out");
-		// dispatch(logout());
+		// dispatch(logoutUser());
+		// dispatch(logoutClub());
 	};
 
 	return (
@@ -23,7 +24,7 @@ const ProfileScreen = (props) => {
 				<View style={styles.userProfile}>
 					<Image
 						style={styles.userImage}
-						source={require("../assets/adaptive-icon.png")}
+						source={require("../assets/images/profileImage_placeholder.jpg")}
 					/>
 					<View style={styles.userDetails}>
 						<Text style={styles.detailsName}>
@@ -57,7 +58,7 @@ const ProfileScreen = (props) => {
 				/>
 			</View>
 			<View style={styles.divider} />
-			<Pressable style={styles.btnLogout} onPress={logoutUser}>
+			<Pressable style={styles.btnLogout} onPress={logoutUserInfo}>
 				<Text style={styles.btnLogoutText}>Log out</Text>
 			</Pressable>
 		</View>

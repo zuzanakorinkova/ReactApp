@@ -3,17 +3,12 @@ import { View, Text, Button, StyleSheet, Image, Pressable } from "react-native";
 import { DarkPurple, Pink, Purple } from "../assets/colors";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../components/common/Input";
-import {
-	signupDetailName,
-	signupDetailTitle,
-} from "../store/actions/UserActions";
+import { signupDetails } from "../store/actions/UserActions";
 import { updateUser } from "../store/actions/UserActions";
 import { useNavigation } from "@react-navigation/native";
 import { parseTwoDigitYear } from "moment";
 
 const SignUpDetailsScreen = () => {
-	// const profileInfo = useSelector((state) => state.user.loggedInUser);
-	// const [userName, setName] = useState(profileInfo.name);
 	const [userName, setName] = useState("");
 	const [userTitle, setTitle] = useState("");
 	const [nameValid, setNameValid] = useState(false);
@@ -23,12 +18,7 @@ const SignUpDetailsScreen = () => {
 	const navigation = useNavigation();
 
 	const handleSave = () => {
-		return (dispatch) => {
-			dispatch(signupDetailName(userName));
-			dispatch(signupDetailTitle(userTitle));
-			console.log("Vista details: ", userName, userTitle);
-		};
-		// navigation.navigate("Signin");
+		dispatch(signupDetails(userName, userTitle));
 	};
 
 	return (
@@ -46,7 +36,7 @@ const SignUpDetailsScreen = () => {
 				</View>
 				<Image
 					style={styles.userImage}
-					source={require("../assets/adaptive-icon.png")}
+					source={require("../assets/images/profileImage_placeholder.jpg")}
 				/>
 			</View>
 			<View>
@@ -67,7 +57,6 @@ const SignUpDetailsScreen = () => {
 					onValid={(valid) => setTitleValid(valid)}
 					error="Please fill out your study programme"
 					placeholder="Study programme"
-					// secureTextEntry={false}
 				/>
 			</View>
 

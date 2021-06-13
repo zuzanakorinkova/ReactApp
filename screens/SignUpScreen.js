@@ -20,17 +20,20 @@ import { signup } from "../store/actions/UserActions";
 const SignUpScreen = (props) => {
 	const navigation = useNavigation();
 	const dispatch = useDispatch();
-	const [title, setTitle] = useState("");
-	const [titleValid, setTitleValid] = useState("");
-	const [name, setName] = useState("");
-	const [nameValid, setNameValid] = useState("");
 	const [email, setEmail] = useState("");
 	const [emailValid, setEmailValid] = useState(false);
 	const [password, setPassword] = useState("");
 	const [passwordValid, setPasswordValid] = useState(false);
+	const [signupError, setSignupError] = useState(false);
 
 	const handleSignUp = () => {
-		dispatch(signup(email, password));
+		if (email && password) {
+			dispatch(signup(email, password));
+			navigation.navigate("Signup Details");
+		} else {
+			console.log("Error, signup not valid!");
+			setSignupError(true);
+		}
 	};
 
 	return (
@@ -60,12 +63,13 @@ const SignUpScreen = (props) => {
 						placeholder="Write your password"
 						secureTextEntry={true}
 					/>
-					{/* <Input label="Confirm password" newName={newName} nameValid={nameValid} handleNewInput={handleNewInput}
-                    error="Passwords dont match" placeholder="Confirm your password" secureTextEntry={true} /> */}
 				</View>
 				<Pressable style={styles.button} onPress={handleSignUp}>
 					<Text style={styles.buttonText}>Sign up</Text>
 				</Pressable>
+				{signupError && (
+					<Text style={styles.error}>Error, signup is not valid</Text>
+				)}
 				<TouchableOpacity
 					style={styles.login}
 					onPress={() => navigation.navigate("Signin")}
@@ -126,6 +130,11 @@ const styles = StyleSheet.create({
 	},
 	loginText: {
 		color: DarkPurple,
+	},
+	error: {
+		color: "#333333",
+		fontSize: 12,
+		marginVertical: 8,
 	},
 });
 

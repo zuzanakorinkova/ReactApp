@@ -33,12 +33,16 @@ const Router = (props) => {
 	};
 
 	const idToken = useSelector((state) => state.user.idToken);
+	const signupComplete = useSelector((state) => state.user.signupComplete);
+	const logUser = useSelector((state) => state.user.loggedInUser);
+
+	const [userDetails, setUserDetails] = useState(false);
 
 	return (
 		<NavigationContainer>
 			{isLoading ? <Loading /> : <Stack.Screen />}
 			<Stack.Navigator>
-				{idToken == null ? (
+				{signupComplete == undefined ? (
 					<>
 						<Stack.Screen
 							name={"Signup"}

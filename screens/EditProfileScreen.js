@@ -20,7 +20,6 @@ const EditProfileScreen = () => {
 		let user = { ...profileInfo };
 		user.name = userName;
 		user.title = userTitle;
-
 		dispatch(updateUser(user));
 		navigation.goBack();
 	};
@@ -36,7 +35,7 @@ const EditProfileScreen = () => {
 				</View>
 				<Image
 					style={styles.userImage}
-					source={require("../assets/adaptive-icon.png")}
+					source={require("../assets/images/profileImage_placeholder.jpg")}
 				/>
 			</View>
 			<View>

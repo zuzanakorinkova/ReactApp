@@ -1,4 +1,4 @@
-import { NEW_CHATMESSAGE, FETCHED_CLUBS, NEW_EVENT, FETCHED_EVENTS, PUSH_USER, NEW_POST, LIKE_POST } from '../actions/ClubActions';
+import { NEW_CHATMESSAGE, FETCHED_CLUBS, NEW_EVENT, FETCHED_EVENTS, PUSH_USER, NEW_POST, LIKE_POST, RESET_STORE } from '../actions/ClubActions';
 import Clubs from '../../models/Clubs';
 import Events from '../../models/Events';
 import User from '../../models/User'
@@ -80,6 +80,10 @@ const ClubReducer = (state = initialState, action: Action) => {
             const newPostArray: Posts[] = [...state.posts]
             return tassign(state, {posts: newPostArray});
 
+        case RESET_STORE: 
+            return {
+                user: new User('', '', '', '', '', false),
+            }
         default:
             return state
     }

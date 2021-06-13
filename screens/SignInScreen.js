@@ -19,15 +19,22 @@ import { ReloadInstructions } from "react-native/Libraries/NewAppScreen";
 const SignInScreen = (props) => {
 	const navigation = useNavigation();
 	const dispatch = useDispatch();
-	const [email, setEmail] = useState("s@s.os");
+	const [email, setEmail] = useState("");
 	const [emailValid, setEmailValid] = useState(false);
-	const [password, setPassword] = useState("123456");
+	const [password, setPassword] = useState("");
 	const [passwordValid, setPasswordValid] = useState(false);
+	const [loginError, setLoginError] = useState(false);
 
 	const handleSignIn = () => {
-		dispatch(signin(email, password));
-		// navigation.navigate("Signup Details");
+		if (email && password) {
+			dispatch(signin(email, password));
+			navigation.navigate("Signup Details");
+		} else {
+			console.log("Error, login not valid!");
+			setLoginError(true);
+		}
 	};
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.logoContainer}>
@@ -58,6 +65,9 @@ const SignInScreen = (props) => {
 				<Pressable style={styles.button} onPress={handleSignIn}>
 					<Text style={styles.buttonText}>Login</Text>
 				</Pressable>
+				{loginError && (
+					<Text style={styles.error}>Error, login is not valid</Text>
+				)}
 				<TouchableOpacity
 					style={styles.signup}
 					onPress={() => navigation.navigate("Signup")}
