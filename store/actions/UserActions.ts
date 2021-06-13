@@ -1,12 +1,12 @@
 import User from "../../models/User";
 import {fetchClubs} from "./ClubActions";
 
-//export const UPDATE_USER = 'UPDATE_USER';
 export const SIGNUP = 'SIGNUP';
-export const SIGNUP_DETAILS = 'SIGNUP_DETAILS'
+export const SIGNUP_DETAIL_NAME = 'SIGNUP_DETAIL_NAME';
+export const SIGNUP_DETAIL_TITLE = 'SIGNUP_DETAIL_TITLE';
 export const SIGNIN = 'SIGNIN';
 export const UPDATE_USER = 'UPDATE_USER'
-
+export const RESET_STORE = 'RESET_STORE'
 
 export const signup = ( email: any, password: any) => {
     return async (dispatch: any) => {
@@ -33,9 +33,14 @@ export const signup = ( email: any, password: any) => {
     }
 }
 
-export const signupDetails = (name: any) => {
-    console.log("Action name: " + name);
-    return {type: SIGNUP_DETAILS, payload: name};
+export const signupDetailName = (name: any) => {
+    // console.log("Action name: " + name);
+    return {type: SIGNUP_DETAIL_NAME, payload: name};
+}
+
+export const signupDetailTitle = (title: any) => {
+    // console.log("Action name: " + name);
+    return {type: SIGNUP_DETAIL_TITLE, payload: title};
 }
 
 // Firebase 
@@ -92,9 +97,9 @@ export const signin = (email: any, password: any) => {
     }
 }
 
-export const updateUser = (name: any) => {
-    console.log("Action update name: " + name);
-    return {type: UPDATE_USER, payload: name};
+export const updateUser = (user: any) => {
+    console.log("Action update user: " + user.name); // Response is the name.
+    return {type: UPDATE_USER, payload: user};
 }
 
 // export const updateUser = (userName: any, userEmail: any) => {
@@ -123,3 +128,6 @@ export const updateUser = (name: any) => {
 //     }
 // }
 
+export const logout = () => {
+    return {type: RESET_STORE, payload: "" };
+}
