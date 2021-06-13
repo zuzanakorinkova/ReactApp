@@ -66,7 +66,7 @@ writeMessage: {
     justifyContent: 'space-around',
 },
 input: {
-    backgroundColor: LightGrey,
+    backgroundColor: '#AAAAAA29',
     width: '70%',
     padding: 6,
     color: 'grey',

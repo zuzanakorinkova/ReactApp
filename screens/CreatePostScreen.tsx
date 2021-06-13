@@ -5,7 +5,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 import {createPost} from '../store/actions/ClubActions';
 
-const CreatePostScreen = props => {
+const CreatePostScreen = (props: any) => {
    const navigatiion = useNavigation()
    const dispatch = useDispatch()
 
@@ -31,8 +31,8 @@ const handleSave = () => {
          error="Please fill out the post title"
          text={title}
          textValid={titleValid}
-         onValid={textValid => setTitleValid(textValid)}
-         setContent={content => setTitle(content)}
+         onValid={(textValid: boolean) => setTitleValid(textValid)}
+         setContent={(content: string) => setTitle(content)}
             />
          <Input
             style={styles.textField} //set height
@@ -40,8 +40,8 @@ const handleSave = () => {
             error="Please fill out the post content"
             text={content}
             textValid={contentValid}
-            onValid={textValid => setContentValid(textValid)}
-            setContent={content => setContent(content)}
+            onValid={(textValid: boolean) => setContentValid(textValid)}
+            setContent={(content: string) => setContent(content)}
             />
             <Button title="Create a post" onPress={handleSave}></Button>
         </ScrollView>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {DarkPurple} from '../../assets/colors';
 import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
 
 
@@ -15,20 +16,23 @@ const Input = (props) => {
 
     return (
         <View>
-            <Text>{props.label}</Text>
+            <Text style={styles.label}>{props.label}</Text>
             <TextInput
                 style={styles.input}
                 value={props.text}
                 placeholder={props.placeholder}
                 onChangeText={handleNewInput}
                 onBlur={() => setTouched(true)}
-                secureTextEntry={props.label == 'Password' ? true : false}
+                secureTextEntry={props.label == 'Password' || props.label == 'Confirm password' ? true : false}
             />{!props.textValid && touched && <Text>{props.error}</Text>}
         </View>
     );
 }//{!nameValid && <Text>{props.error}</Text>}
 
 const styles = StyleSheet.create({
+    label: {
+        color: DarkPurple,
+    },
     input: {
         padding: 10,
     }

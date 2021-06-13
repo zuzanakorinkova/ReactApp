@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { LightGrey, LightPurple, Purple } from '../assets/colors';
 import {UserState} from '../store/reducers/ClubReducers';
 import Input from '../components/common/Input';
-
+import moment from 'moment';
 
 
 const ChatMessages = props => {
@@ -12,8 +12,8 @@ const ChatMessages = props => {
 
     const loggedInUserId = useSelector(state => state.user.loggedInUser.id)
     
-    const hours = props.chatmessage.created.getHours();
-    const minutes = props.chatmessage.created.getMinutes();
+
+    const displayTime = moment(props.chatmessage.created).format('LT')
 
     const userIdOfMessage = props.chatmessage.user.loggedInUser.id;
     //console.log(userIdOfMessage)
@@ -33,7 +33,7 @@ const ChatMessages = props => {
                     </Text>
                 </View>
                 <Text style={styles.underMessage}>{name}</Text>
-                <Text style={[styles.time, isMe ? styles.timeFromMe : '']}>{hours}:{minutes}</Text>  
+                <Text style={[styles.time, isMe ? styles.timeFromMe : '']}>{displayTime}</Text>  
             </View>
         </ScrollView>
     );

@@ -1,20 +1,17 @@
-import React, { useState } from 'react';
-import ChatRoom from '../components/ChatRoom';
-import Events from '../components/Events';
-import Posts from '../components/Posts';
+import React, { FC, useState } from 'react';
 import EventsAndPosts from '../components/EventsAndPosts';
 import { View, Text, Button, StyleSheet, ScrollView, SectionList, TouchableOpacity, Image, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
-import Input from "../components/common/Input";
-import { signupDetails } from "../store/actions/UserActions";
-import Ionicons from '@expo/vector-icons/Ionicons';
+// import Input from "../components/common/Input";
+// import { signupDetails } from "../store/actions/UserActions";
+// import Ionicons from '@expo/vector-icons/Ionicons';
 
 
-const HomeScreen = props => {
+const HomeScreen:FC = (props: any) => {
     const navigation = useNavigation();
     // select clubs id and pass it through Flatlist
-    const allData = useSelector(state => state.club.clubs)
+    const allData = useSelector((state: any) => state.club.clubs)
 
    const clubs = []
    const events = []
@@ -32,22 +29,22 @@ const HomeScreen = props => {
 
 
 //profile
-  const dispatch = useDispatch();
-	const [name, setName] = useState("");
-	const [nameValid, setNameValid] = useState("");
+  // const dispatch = useDispatch();
+// const [name, setName] = useState("");
+ // const [nameValid, setNameValid] = useState("");
 
-	const handleSignUp = () => {
-	console.log('signing up')
-		dispatch(signupDetails(name));
-	};
+// const handleSignUp = () => {
+ // console.log('signing up')
+ // 	dispatch(signupDetails(name));
+	 // };
 
 
   // FETCH ALL EVENTS
 
   // Create a flatlist with club data and new components
     return (
-        <View>
     <View>
+    {/* <View>
             <Text>----------------------</Text>
              <Input
                 label="Name"
@@ -60,7 +57,7 @@ const HomeScreen = props => {
                  secureTextEntry={true}
              />
              <Button title="Add name" onPress={handleSignUp}></Button>
-            </View>
+            </View> */}
 
     <View>
     <FlatList data={clubs} renderItem={itemData => (

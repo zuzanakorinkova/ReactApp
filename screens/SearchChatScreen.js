@@ -52,7 +52,7 @@ const handleSearch = (text) => {
             />
        </View>
        <View>
-       <Button onPress={() =>  navigation.navigate('New Club')} type="clear"
+       <Button onPress={() =>  navigation.navigate('Create Club')} type="clear"
        title="Add new club"
        icon={
         <Ionicons

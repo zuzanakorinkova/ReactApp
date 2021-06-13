@@ -16,7 +16,7 @@ import { signup } from "../store/actions/UserActions";
 import { signupDetails } from "../store/actions/UserActions";
 
 
-const SignUpScreen = (props) => {
+const SignUpScreen = (props: any) => {
 
 	const navigation = useNavigation();
 	const dispatch = useDispatch();
@@ -28,11 +28,17 @@ const SignUpScreen = (props) => {
 	const [emailValid, setEmailValid] = useState(false);
 	const [password, setPassword] = useState("");
 	const [passwordValid, setPasswordValid] = useState(false);
+	const [confirmPassword, setConfirmPassword] = useState('')
+	const [confirmPasswordValid, setConfirmPasswordValid] = useState(false);
 
 	const handleSignUp = () => {
 		//console.log('signing up')
-		dispatch(signup(email, password));
-		dispatch(signupDetails(name));
+		if(password != confirmPassword){
+			console.log('passwords dont match')
+		}else {
+			dispatch(signup(email, password));
+			dispatch(signupDetails(name));
+		}
 	};
 
 	return (
@@ -46,21 +52,20 @@ const SignUpScreen = (props) => {
 					<Input
 						label="Email"
 						text={email}
-						setContent={(content) => setEmail(content)}
+						setContent={(content: string) => setEmail(content)}
 						textValid={emailValid}
-						onValid={(valid) => setEmailValid(valid)}
+						onValid={(valid: boolean) => setEmailValid(valid)}
 						error="Please fill out your email"
 						placeholder="Write your email"
 					/>
 					<Input
 						label="Password"
 						text={password}
-						setContent={(content) => setPassword(content)}
+						setContent={(content: string) => setPassword(content)}
 						textValid={passwordValid}
-						onValid={(valid) => setPasswordValid(valid)}
+						onValid={(valid: boolean) => setPasswordValid(valid)}
 						error="Please fill out your password"
 						placeholder="Write your password"
-						secureTextEntry={true}
 					/>
 					{/* <Input
 						label="Name"
@@ -75,6 +80,16 @@ const SignUpScreen = (props) => {
 
 					{/* <Input label="Confirm password" newName={newName} nameValid={nameValid} handleNewInput={handleNewInput}
                     error="Passwords dont match" placeholder="Confirm your password" secureTextEntry={true} /> */}
+					<Input
+						label="Confirm password"
+						text={confirmPassword}
+						setContent={(content: string) => setConfirmPassword(content)}
+						textValid={confirmPasswordValid}
+						onValid={(valid: boolean) => setConfirmPasswordValid(valid)}
+						error="Please confirm your password"
+						placeholder="Confirm password"
+					/>
+					<Text style={ password == confirmPassword ? {display: 'none'} : {display: 'flex'}}>Passwords don't match</Text>
 				</View>
 				<Pressable style={styles.button} onPress={handleSignUp}><Text style={styles.buttonText}>Sign up</Text></Pressable>
 				<TouchableOpacity style={styles.login} onPress={() => navigation.navigate("Signin")}>

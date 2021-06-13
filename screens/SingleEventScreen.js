@@ -6,16 +6,17 @@ import { Button } from 'react-native-elements';
 import Clubs from '../components/Clubs';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import {pushUser} from '../store/actions/ClubActions';
+import {userGoing, userNotGoing} from '../store/actions/ClubActions';
 import { ScrollView } from 'react-native-gesture-handler';
+import {Avatar} from 'react-native-elements';
+import moment from 'moment';
 
 
 const SingleEventScreen = props => {
     let clubName = ''
+    let clubAvatar = ''
     let startDate = ''
     let endDate = ''
-    let fromTime = ''
-    let untilTime = ''
     let location = ''
     let userId = ''
     let userLength = ''
@@ -30,10 +31,9 @@ const SingleEventScreen = props => {
            for(const key1 in clubs[key].events){
                thumbnail = clubs[key].events[key1].thumbnail
                clubName = clubs[key].name
-               startDate = clubs[key].events[key1].startDate
-               endDate = clubs[key].events[key1].endDate
-               fromTime = clubs[key].events[key1].fromTime
-               untilTime = clubs[key].events[key1].untilTime
+               clubAvatar = clubs[key].image
+               startDate = moment(clubs[key].events[key1].startDate).format('MMM DD • LT')
+               endDate = moment(clubs[key].events[key1].endDate).format('MMM DD • LT')
                location = clubs[key].events[key1].location
                description = clubs[key].events[key1].description
                userLength = clubs[key].events[key1].users
@@ -43,16 +43,19 @@ const SingleEventScreen = props => {
            }
        }
     }
-
     const dispatch = useDispatch()
     const loggedInUser = useSelector(state => state.user.loggedInUser)
-    const handlePushUser = () => {
-       if(!loggedInUser.id == userId) {
-            dispatch(pushUser(loggedInUser,clubId, id))
-       }else {
-           console.log('user is already in event')
-       }
+
+    const handleUserGoing = () => {
+       // if (loggedInUser.id == userId){
+            dispatch(userGoing(loggedInUser, clubId, id))
+       // }
+      
         
+    }
+
+    const handleNotGoing = () => {
+        dispatch(userNotGoing(loggedInUser, clubId, id))
     }
     
 
@@ -68,24 +71,26 @@ const SingleEventScreen = props => {
                     <Text style={styles.title}>{props.route.params.name}</Text>
                     <View style={styles.containerTime}>
                         <Ionicons style={styles.icon} name="ios-time" size={15} color={DarkGrey}/>
-                        <Text style={styles.time}>{startDate} ⋅ </Text>
-                        <Text style={styles.time}>{fromTime} - </Text>
-                        <Text style={styles.time}>{endDate} ⋅ </Text>
-                        <Text style={styles.time}>{untilTime}</Text>
+                        <Text style={styles.time}>{startDate} - {endDate}</Text>
                     </View>
                     <View style={styles.containerTime}>
                         <Ionicons style={styles.icon} name="ios-location" size={15} color={DarkGrey}/>
                         <Text style={styles.location}>{location}</Text>
                     </View>
                     <View style={styles.containerClub}>
-                        <Text style={styles.clubName}>{clubName}</Text>
+                        <View style={styles.club}>
+                            <Avatar rounded source={{uri: clubAvatar}} />
+                            <Text style={styles.clubName}>{clubName}</Text>
+                        </View>
                         <TouchableOpacity onPress={() =>  navigation.navigate('Chat')}><Ionicons style={styles.chatIcon} name={'ios-chatbubbles'} size={25} color={'white'} /></TouchableOpacity>
                     </View>
                     <View style={styles.containerUser}>
                         <Text style={styles.goingText}>Going ⋅ {userLength.length}</Text>
-                        <TouchableOpacity style={loggedInUser.id == userId ? styles.btnPress : styles.button} onPress={handlePushUser}><Ionicons style={loggedInUser.id == userId ? styles.goingPress : styles.goingIcon} name="ios-checkbox-outline" size={20}/><Text style={loggedInUser.id == userId ? styles.btnPressText : styles.buttonText}>Going</Text></TouchableOpacity>
+                        <TouchableOpacity disabled={loggedInUser.id == userId ? true : false} style={!loggedInUser.id == userId ? styles.button : styles.btnPress} onPress={handleUserGoing}><Ionicons style={!loggedInUser.id == userId ? styles.goingIcon : styles.goingPress} name="ios-checkbox-outline" size={20}/><Text style={!loggedInUser.id == userId ? styles.buttonText : styles.btnPressText}>Going</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={handleNotGoing} style={!loggedInUser.id == userId ? {display: 'none'} : {display: 'flex'}} ><Ionicons style={styles.chatIcon} name={'ios-close-outline'} size={20} color={'white'} /></TouchableOpacity>
                     </View>
                 </View>
+
                 <View style={styles.containerAbout}>
                     <Text style={styles.about}>About</Text>
                     <Text>{description}</Text>
@@ -138,9 +143,14 @@ containerClub: {
     padding: 10,
 },
 clubName: {
-    color: DarkPurple,
+    color: 'black',
     fontSize: 18,
     fontWeight: 'bold',
+    marginLeft: 10,
+},
+club: {
+    flexDirection: 'row',
+    alignItems: 'center',
 },
 chatIcon: {
     backgroundColor: Purple,

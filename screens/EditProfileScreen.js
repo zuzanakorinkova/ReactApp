@@ -17,6 +17,8 @@ const EditProfileScreen = () => {
         navigation.goBack();
     }
 
+
+
  return (
     <View>
         <Input label="What is your name" text={userName} setContent={content => setName(content)} textValid={nameValid} onValid={valid => setNameValid(valid)}

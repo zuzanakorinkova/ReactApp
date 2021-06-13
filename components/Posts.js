@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet,  } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
 import moment from 'moment'; // https://momentjs.com/
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -8,9 +8,11 @@ import { DarkPurple, Purple, LightGrey } from '../assets/colors';
 import { useSelector, useDispatch } from 'react-redux';
 import {Avatar} from 'react-native-elements';
 import {likePost} from '../store/actions/ClubActions';
+import { useNavigation } from '@react-navigation/native';
 
 const Posts = props => {
-    
+    const navigation = useNavigation()
+
     const clubs = useSelector(state => state.club.clubs)
     let clubName = ''
     let clubImage = ''
@@ -36,22 +38,15 @@ const Posts = props => {
     const loggedInUser = useSelector(state => state.user.loggedInUser)
 
     const handleLike = () => {
-       if(!loggedInUser.id == userId) {
             dispatch(likePost(loggedInUser,clubId, props.post.id))
-       }else {
-           console.log('user already liked this')
-       }
         
     }
-
 
     const timestamp = props.post.created
     let time = moment(timestamp || moment.now()).fromNow()
 
-    console.log(props.post.likes)
-
  return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Single Post', {name: props.post.title, id: props.post.id})}> 
         <View style={styles.blog}>
             <Ionicons name="ios-newspaper" size={20} color="#4f52a0"/>
             <Text style={styles.blogText}>Blog</Text>
@@ -61,7 +56,7 @@ const Posts = props => {
             <Text>{props.post.content}</Text>
             <View style={styles.timeContainer}>
                 <Text style={styles.time}>{time}</Text>
-                <TouchableOpacity style={{flexDirection: 'row'}} onPress={handleLike}>
+                <TouchableOpacity disabled={loggedInUser.id == userId ? true : false} style={{flexDirection: 'row'}} onPress={handleLike}>
                     <Ionicons name={loggedInUser.id == userId ? "ios-heart" : 'ios-heart-outline' } size={20} color="#4f52a0"/>
                     <Text style={styles.likes}>{props.post.likes.length}</Text>
                 </TouchableOpacity>
@@ -72,8 +67,8 @@ const Posts = props => {
             </View>
         </View>
         
-    </View>
- );
+    </TouchableOpacity>
+ )
 }
 
 const styles = StyleSheet.create({

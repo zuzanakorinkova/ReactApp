@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { signin } from '../store/actions/UserActions';
 import { ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 
-const SignInScreen = props => {
+const SignInScreen = (props: any) => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');
@@ -21,15 +21,15 @@ const SignInScreen = props => {
     }
     return (
         <View style={styles.container}>
-            <View style={styles.logoContainer}>
+            <View>
                 <Image style={styles.logo} source={require('../assets/logo.png')} />
                 <Text style={styles.heading}>Login to get access</Text>
             </View>
             <View style={styles.formContainer}>
                 <View style={styles.inputContainer}>
-                    <Input label="Email" text={email} setContent={content => setEmail(content)} textValid={emailValid} onValid={valid => setEmailValid(valid)}
+                    <Input label="Email" text={email} setContent={(content: string) => setEmail(content)} textValid={emailValid} onValid={(valid: boolean) => setEmailValid(valid)}
                         error="Please fill out your email" placeholder="Write your email" />
-                    <Input label="Password" text={password} setContent={content => setPassword(content)} textValid={passwordValid} onValid={valid => setPasswordValid(valid)}
+                    <Input label="Password" text={password} setContent={(content: string) => setPassword(content)} textValid={passwordValid} onValid={(valid: boolean) => setPasswordValid(valid)}
                         error="Please fill out your password" placeholder="Write your password" />
                   
                 </View>

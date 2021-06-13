@@ -10,7 +10,6 @@ const ChatScreen = props => {
     const dispatch = useDispatch()
 
     const chatrooms = useSelector(state => state.club.clubs);
-    console.log(chatrooms)
     const userNotifications = useSelector(state => state.user.loggedInUser.chatNotification)
    
     const navigation = useNavigation();

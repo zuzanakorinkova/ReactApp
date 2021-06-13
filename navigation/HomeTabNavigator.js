@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import ChatScreen from '../screens/ChatScreen';
 import ChatMessagesScreen from '../screens/ChatMessageScreen';
-import NewClub from '../screens/NewClub';
+import CreateClubScreen from '../screens/CreateClubScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
 import SearchChatScreen from '../screens/SearchChatScreen';
@@ -12,6 +12,7 @@ import AllClubsScreen from '../screens/AllClubsScreen';
 import AllPostsScreen from '../screens/AllPostsScreen';
 import AllEventsScreen from '../screens/AllEventsScreen';
 import CreateEventScreen from '../screens/CreateEventScreen';
+import SinglePostScreen from '../screens/SinglePostScreen';
 import CreatePostScreen from '../screens/CreatePostScreen';
 import PostOrEventScreen from '../screens/PostOrEventScreen';
 import SingleEventScreen from '../screens/SingleEventScreen';
@@ -49,17 +50,17 @@ function ChatStackNavigator() {
                     <Ionicons
                       name="ios-create-outline"
                       size={25}
-                      color="#4f52a0"/>}
+                      color="#5050A5"/>}
                       />),
             headerStyle: {backgroundColor: '#fff'},
-            headerTintColor: '#4f52a0',
+            headerTintColor: '#5050A5',
             headerTitleStyle: {textTransform: 'uppercase',},
             cardStyle: { backgroundColor: '#f2f2f2' },
             
             }}
             component={ChatScreen} />
             <Stack.Screen name="ChatMessages" component={ChatMessagesScreen} options={options} />
-            <Stack.Screen name="New Club" component={NewClub} options={options} />
+            <Stack.Screen name="Create Club" component={CreateClubScreen} options={options} />
             <Stack.Screen name="Search Chat" component={SearchChatScreen} options={options}/>
         </Stack.Navigator>
     )
@@ -81,10 +82,10 @@ function HomeStackNavigator() {
                     <Ionicons
                       name="ios-add-outline"
                       size={25}
-                      color="#4f52a0"/>}
+                      color="#5050A5"/>}
                       />),
                         headerStyle: {backgroundColor: '#fff',},
-                        headerTintColor: '#4f52a0',
+                        headerTintColor: '#5050A5',
                         headerTitleStyle: {textTransform: 'uppercase',},
                         cardStyle: { backgroundColor: '#f2f2f2' },
                         }} />
@@ -92,7 +93,8 @@ function HomeStackNavigator() {
             <Stack.Screen name="Create Event" component={CreateEventScreen} options={options} />
             <Stack.Screen name="Create Post" component={CreatePostScreen} options={options} />
             <Stack.Screen name="Post or Event" component={PostOrEventScreen} options={options} />
-            <Stack.Screen name="Single Event" component={SingleEventScreen} options={({ route }) => ({ title: route.params.name,  headerTintColor: '#4f52a0',  headerTitleStyle: {textTransform: 'uppercase',},cardStyle: { backgroundColor: '#f2f2f2' },})} />
+            <Stack.Screen name="Single Event" component={SingleEventScreen} options={({ route }) => ({ title: route.params.name,  headerTintColor: '#5050A5',  headerTitleStyle: {textTransform: 'uppercase',},cardStyle: { backgroundColor: '#f2f2f2' },})} />
+            <Stack.Screen name="Single Post" component={SinglePostScreen} options={({ route }) => ({ title: route.params.name,  headerTintColor: '#5050A5',  headerTitleStyle: {textTransform: 'uppercase',},cardStyle: { backgroundColor: '#f2f2f2' },})} />
         </Stack.Navigator>
     )
 }
@@ -132,8 +134,8 @@ const HomeTabNavigator = props => {
                 },
             })}
             tabBarOptions={{
-                activeTintColor: '#4f52a0',
-                inactiveTintColor: 'gray',
+                activeTintColor: '#5050A5',
+                inactiveTintColor: '#707070',
                 labelStyle: {
                     fontSize: 14,
                     textTransform: 'uppercase',
