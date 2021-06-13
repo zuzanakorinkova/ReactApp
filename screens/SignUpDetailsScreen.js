@@ -3,13 +3,14 @@ import { View, Text, Button, StyleSheet, Image, Pressable } from "react-native";
 import { DarkPurple, Pink, Purple } from "../assets/colors";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../components/common/Input";
+import { signupDetails } from "../store/actions/UserActions";
 import { updateUser } from "../store/actions/UserActions";
 import { useNavigation } from "@react-navigation/native";
+import { parseTwoDigitYear } from "moment";
 
-const EditProfileScreen = () => {
-	const profileInfo = useSelector((state) => state.user.loggedInUser);
-	const [userName, setName] = useState(profileInfo.name);
-	const [userTitle, setTitle] = useState(profileInfo.title);
+const SignUpDetailsScreen = () => {
+	const [userName, setName] = useState("");
+	const [userTitle, setTitle] = useState("");
 	const [nameValid, setNameValid] = useState(false);
 	const [titleValid, setTitleValid] = useState(false);
 
@@ -17,15 +18,15 @@ const EditProfileScreen = () => {
 	const navigation = useNavigation();
 
 	const handleSave = () => {
-		let user = { ...profileInfo };
-		user.name = userName;
-		user.title = userTitle;
-		dispatch(updateUser(user));
-		navigation.goBack();
+		dispatch(signupDetails(userName, userTitle));
 	};
 
 	return (
 		<View style={styles.container}>
+			<View style={styles.logoHolder}>
+				<Image style={styles.logo} source={require("../assets/images/3.png")} />
+			</View>
+			<Text style={styles.sectionTitle}>Before we start...</Text>
 			<View style={styles.editImage}>
 				<View style={styles.imageUpload}>
 					<Text style={styles.uploadText}>Profile Picture</Text>
@@ -46,7 +47,7 @@ const EditProfileScreen = () => {
 					textValid={nameValid}
 					onValid={(valid) => setNameValid(valid)}
 					error="Please fill out your name"
-					placeholder="Name"
+					placeholder="Full name"
 				/>
 				<Input
 					label="Study Programme"
@@ -58,8 +59,9 @@ const EditProfileScreen = () => {
 					placeholder="Study programme"
 				/>
 			</View>
+
 			<Pressable style={styles.btnSave} onPress={handleSave}>
-				<Text style={styles.btnText}>Save changes</Text>
+				<Text style={styles.btnText}>Save details</Text>
 			</Pressable>
 		</View>
 	);
@@ -69,11 +71,29 @@ const styles = StyleSheet.create({
 	container: {
 		marginHorizontal: 20,
 	},
+	logoHolder: {
+		alignItems: "center",
+		marginVertical: 30,
+	},
+	logo: {
+		height: 120,
+		width: 120,
+		borderRadius: 70,
+		borderWidth: 7,
+		borderColor: "#fff",
+	},
+	sectionTitle: {
+		fontSize: 18,
+		lineHeight: 21,
+		fontWeight: "bold",
+		color: DarkPurple,
+		marginBottom: 15,
+	},
 	editImage: {
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
-		marginVertical: 50,
+		marginVertical: 40,
 	},
 	imageUpload: {
 		flexDirection: "column",
@@ -112,7 +132,7 @@ const styles = StyleSheet.create({
 	btnSave: {
 		alignItems: "flex-start",
 		paddingVertical: 20,
-		paddingHorizontal: 60,
+		paddingHorizontal: 20,
 		marginVertical: 20,
 		borderRadius: 5,
 		shadowColor: "#222",
@@ -131,4 +151,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default EditProfileScreen;
+export default SignUpDetailsScreen;

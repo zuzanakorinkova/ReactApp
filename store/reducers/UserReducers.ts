@@ -1,12 +1,14 @@
 import User from '../../models/User';
-import { SIGNUP, SIGNUP_DETAILS, SIGNIN, UPDATE_USER} from '../actions/UserActions';
+import { SIGNUP, SIGNUP_DETAIL, SIGNIN, UPDATE_USER, RESET_STORE} from '../actions/UserActions';
 import {tassign} from 'tassign';
 import { useRoute } from '@react-navigation/core';
+import { State } from 'react-native-gesture-handler';
 
 export interface UserState {
     chatNotifications: User | undefined;
     loggedInUser: User | undefined;
     idToken: string | undefined;
+    signupComplete: boolean | undefined;
 }
 
 export interface Action {
@@ -18,6 +20,7 @@ const initialState: UserState = {
     chatNotifications: undefined,
     loggedInUser: undefined,
     idToken: undefined,
+    signupComplete: undefined
 }
 
 
@@ -31,18 +34,14 @@ const UserReducer = (state: UserState = initialState, action: Action) => {
                     idToken: action.payload.idToken,
                 }
             };
-        case SIGNUP_DETAILS:
-            {
-                console.log("Reducer name: " + action.payload)
-
+        case SIGNUP_DETAIL: {
                 const loggedInUser = state.loggedInUser
                 const userInfo: User = {...loggedInUser}
-                userInfo.name = action.payload;
-                console.log("UserInfo name: " + userInfo.name)
-
-                // return {...state, loggedInUser: userInfo };
-                return tassign(state, { loggedInUser: userInfo});
-            };
+                userInfo.name = action.payload.name;
+                userInfo.title = action.payload.title;
+                
+                return tassign(state, { loggedInUser: userInfo, signupComplete: true});
+        }
 
         case SIGNIN:
             return {
@@ -53,17 +52,14 @@ const UserReducer = (state: UserState = initialState, action: Action) => {
 
         case UPDATE_USER:
             {
-                console.log("Reducer update  name: " + action.payload)
-
-                const loggedInUser = state.loggedInUser
-                const userInfo: User = {...loggedInUser}
-                userInfo.name = action.payload;
-                console.log("UserInfo name: " + userInfo.name)
-
-                // return {...state, loggedInUser: userInfo };
-                return tassign(state, { loggedInUser: userInfo});
-                // return tassign(state, {loggedInUser: action.payload})
+                return tassign(state, { loggedInUser: action.payload});
             };
+        case RESET_STORE: 
+            return {
+                loggedInUser: new User('', '', '', '', '', false),
+                idToken: '',
+                signupComplete: false
+            }
         
         default:
             return state;

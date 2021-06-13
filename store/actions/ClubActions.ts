@@ -14,6 +14,7 @@ export const FETCHED_EVENTS = 'FETCH_EVENTS';
 export const PUSH_USER = 'PUSH_USER';
 export const NEW_POST = 'NEW_POST';
 export const LIKE_POST = 'LIKE_POST';
+export const RESET_STORE = 'RESET_STORE'
 
 export const fetchClubs = () => {
     return async (dispatch: any, getState: any) => {
@@ -269,5 +270,6 @@ export const likePost = (loggedInUser: any, clubId:any, postId: any) => {
     
 };
 
-
-
+export const logout = () => {
+    return {type: RESET_STORE, payload: "" };
+}
