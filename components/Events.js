@@ -20,7 +20,8 @@ const Events = props => {
   
  return (
     <TouchableOpacity onPress={() => navigation.navigate('Single Event', {name: props.event.title, id: props.event.id})} style={styles.container}>
-         <Image style={styles.image} source={{uri:props.event.thumbnail}} />
+			<Image style={styles.image} source={require("../assets/images/events.jpg")}/>
+         {/* <Image style={styles.image} source={{uri:props.event.thumbnail}} /> */}
          <View style={styles.view}>
             <Text style={styles.title}>{props.event.title}</Text>
             <View style={styles.containerTime}>

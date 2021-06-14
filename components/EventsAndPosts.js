@@ -73,7 +73,8 @@ const EventsAndPosts = props => {
     let end = moment(props.home.events[key].endDate).format('MMM D • LT');
     eventLoop.push(
         <TouchableOpacity onPress={() => navigation.navigate('Single Event', {name: props.home.events[key].title, id: props.home.events[key].id})} style={styles.container}>
-        <Image style={styles.image} source={{uri:props.home.events[key].thumbnail}} />
+        <Image style={styles.image} source={require("../assets/images/events.jpg")}/>
+        {/* <Image style={styles.image} source={{uri:props.home.events[key].thumbnail}} /> */}
         <View style={styles.view}>
            <Text style={styles.title}>{props.home.events[key].title}</Text>
            <View style={styles.containerTime}>

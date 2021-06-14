@@ -14,11 +14,13 @@ import Loading from "../screens/LoadingScreen";
 const Stack = createStackNavigator();
 
 const Router = (props) => {
+
 	React.useEffect(() => {
 		setTimeout(() => {
 			setIsLoading(!isLoading);
 		}, 500);
 	}, []);
+	
 	const [isLoading, setIsLoading] = useState(true);
 
 	const options = {

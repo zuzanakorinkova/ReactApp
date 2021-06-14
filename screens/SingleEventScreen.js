@@ -65,7 +65,7 @@ const SingleEventScreen = props => {
         <View>
             <ScrollView>
                 <View>
-                    <Image style={styles.image} source={{uri:thumbnail}} />
+                <Image style={styles.image} source={require("../assets/images/events.jpg")}/>
                 </View>
                 <View style={styles.event}>
                     <Text style={styles.title}>{props.route.params.name}</Text>
@@ -110,6 +110,7 @@ event: {
     backgroundColor: '#fff', 
 },
 image: {
+    width: '100%',
     height: 200,
 },
 title: {

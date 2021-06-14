@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Button, StyleSheet, TextInput } from "react-native";
-import {DarkPurple} from '../../assets/colors';
+import {DarkPurple, Purple} from '../../assets/colors';
 
 const Input = (props) => {
 	const [touched, setTouched] = useState(false);
@@ -22,7 +22,7 @@ const Input = (props) => {
 				onBlur={() => setTouched(true)}
 				secureTextEntry={props.label == 'Password' || props.label == 'Confirm password' ? true : false}
 			/>
-			{!props.textValid && touched && <Text>{props.error}</Text>}
+			{!props.textValid && touched && <Text style={styles.error}>{props.error}</Text>}
 		</View>
 	);
 }; //{!nameValid && <Text>{props.error}</Text>}
@@ -50,6 +50,10 @@ const styles = StyleSheet.create({
 		paddingVertical: 6,
 		fontSize: 16,
 	},
+	error: {
+		fontWeight: 'bold',
+		color: Purple,
+	}
 
 });
 
